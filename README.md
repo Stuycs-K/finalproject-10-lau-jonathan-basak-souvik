@@ -16,5 +16,4 @@ How does the user install/compile/run the program. (CHANGE THIS!!!!!)
 How does the user interact with this program? (CHANGE THIS!!!!!)
 
 ### Resources/ References:
-
-list here(CHANGE THIS!!!!!)
+Imported Library: gifAnimation [link to source code]{https://github.com/extrapixel/gif-animation}
