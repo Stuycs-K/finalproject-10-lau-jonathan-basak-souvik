@@ -12,7 +12,7 @@ This will be a video steganography encoder/decoder.
   
 ### Instructions:
 
-How does the user install/compile/run the program. (CHANGE THIS!!!!!)
+Required libraries: GifAnimation
 How does the user interact with this program? (CHANGE THIS!!!!!)
 
 ### Resources/ References:
