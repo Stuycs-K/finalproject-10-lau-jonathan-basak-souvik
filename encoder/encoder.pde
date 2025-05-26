@@ -7,8 +7,8 @@ final static int REDLAST2 = -196609;
 
 int MODE = STEGO;
 String PLANE = "red";
-int LAYER = 0;
-String PLAINTEXT = "This";
+int LAYER = 5;
+String PLAINTEXT = "myeyes.gif";
 String DISPLAYMODE = "true";
 String INPUTFILENAME = "rickroll-roll.gif";
 String OUTPUTFILENAME = "rickroll-encoded.gif";
@@ -17,7 +17,7 @@ Gif animation;
 PImage[] allFrames;
 
 void setup() {
-  size(10,10);
+  size(800,600);
   //if (args == null) {
   //  println("no arguments provided");
   //  println("flags: -i INPUTFILENAME -o OUTPUTFILENAME -p PLAINTEXT (text or filename depending on mode) -d DISPLAYMODE (true/false) -m MODE (GREEDY/SELECTIVE/FILE)");
@@ -30,28 +30,19 @@ void setup() {
   //}
   
   //read input gif
-  //animation = new Gif(this, INPUTFILENAME);
-  //allFrames = Gif.getPImages(this, INPUTFILENAME);
+  animation = new Gif(this, INPUTFILENAME);
+  allFrames = Gif.getPImages(this, INPUTFILENAME);
   
-  ////encode message and export to gif file
-  //encodeMessage(readMessage());
+  //encode message and export to gif file
+  encodeMessage(readMessage());
   
-  //GifMaker output = new GifMaker(this, OUTPUTFILENAME);
-  //output.setRepeat(0);
-  //output.setTransparent(0,0,0);
-  //for (int i=0; i<allFrames.length; i++) {
-  //  output.addFrame(allFrames[i]);
-  //}
-  //output.finish();
-  
-  
-  PImage original = loadImage("plains.png");
-  PImage secret = loadImage("rick.png");
-  secret = resizeImage(secret, original.width, original.height);
-  secret.loadPixels();
-  blackAndWhite(secret);
-  modifyImage(original, secret.pixels);
-  original.save("encoded.png");
+  GifMaker output = new GifMaker(this, OUTPUTFILENAME);
+  output.setRepeat(0);
+  output.setTransparent(0,0,0);
+  for (int i=0; i<allFrames.length; i++) {
+    output.addFrame(allFrames[i]);
+  }
+  output.finish();
 }
 
 void draw() {
@@ -60,16 +51,25 @@ void draw() {
 }
 
 void encodeMessage(int[] messageArray) {
-  int bytesPerFrame = (int) (Math.ceil(1.0 * messageArray.length / allFrames.length));
-  int bytesEncoded = 0;
-  int frame = 0;
-  
-  while (bytesEncoded < messageArray.length) {
-    int start = bytesPerFrame * frame;
-    int end  = Math.min(messageArray.length, start + bytesPerFrame);
-    modifyImage(allFrames[frame], Arrays.copyOfRange(messageArray, start, end));
-    bytesEncoded += bytesPerFrame;
-    frame++;
+  if (MODE == STEGO) {
+    PImage[] secretFrames = Gif.getPImages(this, PLAINTEXT);
+    for (int i=0; i<secretFrames.length; i++) {
+      secretFrames[i] = resizeImage(secretFrames[i], allFrames[i].width, allFrames[i].height);
+      blackAndWhite(secretFrames[i]);
+      modifyImage(allFrames[i], secretFrames[i].pixels);
+    }
+  } else {
+    int bytesPerFrame = (int) (Math.ceil(1.0 * messageArray.length / allFrames.length));
+    int bytesEncoded = 0;
+    int frame = 0;
+    
+    while (bytesEncoded < messageArray.length) {
+      int start = bytesPerFrame * frame;
+      int end  = Math.min(messageArray.length, start + bytesPerFrame);
+      modifyImage(allFrames[frame], Arrays.copyOfRange(messageArray, start, end));
+      bytesEncoded += bytesPerFrame;
+      frame++;
+    }
   }
 }
 
@@ -88,6 +88,7 @@ void modifyImage(PImage img, int[] messageSegment) {
     }
     
   } else if (MODE == STEGO) {
+    //messageSegment is the black and white pixels to hide
     for (int i=0; i<messageSegment.length; i++) {
       int c = img.pixels[i];
       if (PLANE.equals("red")) {
