@@ -7,26 +7,101 @@ final static int REDLAST2 = -196609;
 int MODE = GREEDY;
 String PLAINTEXT = "This";
 String DISPLAYMODE = "true";
-String INPUTFILENAME="rickroll-roll.gif";
+String INPUTFILENAME = "rickroll-roll.gif";
+String OUTPUTFILENAME = "rickroll-encoded.gif";
 
 Gif animation;
 PImage[] allFrames;
 
 void setup() {
   size(1200,600);
+  //if (args == null) {
+  //  println("no arguments provided");
+  //  println("flags: -i INPUTFILENAME -o OUTPUTFILENAME -p PLAINTEXT (text or filename depending on mode) -d DISPLAYMODE (true/false) -m MODE (GREEDY/SELECTIVE/FILE)");
+  //  return;
+  //}
+  
+  //if (!parseArgs()) {
+  //  println("Parsing argument error;");
+  //  return;
+  //}
+  
+  //read input gif
   animation = new Gif(this, "rickroll-roll.gif");
   allFrames = Gif.getPImages(this, "rickroll-roll.gif");
-  animation.play();
-  /*encode:
-  get number of bytes of data
-  split message data among the frames
-  stick each chunk of message data into each frame, have way to mark end of encoded bytes
   
-  decode:
-  read until marked end
-  combine read data from each frame
-  profit
-  */
+  //encode message and export to gif file
+  encodeMessage(readMessage());
+  GifMaker output = new GifMaker(this, OUTPUTFILENAME);
+  output.setRepeat(0);
+  output.setTransparent(0,0,0);
+  for (int i=0; i<allFrames.length; i++) {
+    output.addFrame(allFrames[i]);
+  }
+  output.finish();
+}
+
+boolean parseArgs(){
+  if (args != null) {
+    for (int i = 0; i < args.length; i++){
+      if(args[i].equals("-i")){
+        try{
+          INPUTFILENAME=args[i+1];
+        }catch(Exception e){
+          println("-o requires filename as next argument");
+          return false;
+        }
+      }
+
+      if(args[i].equals("-p")){
+        try{
+          PLAINTEXT=args[i+1];
+        }catch(Exception e){
+          println("-p requires quoted plaintext as next argument");
+          return false;
+        }
+      }
+
+      if(args[i].equals("-o")){
+        if(args[i+1]!=null){
+          OUTPUTFILENAME=args[i+1];
+        }else{
+          println("-o requires filename as next argument");
+          return false;
+        }
+      }
+
+      if(args[i].equals("-d")){
+        if(args[i+1]!=null){
+          DISPLAYMODE=args[i+1];
+        }else{
+          println("-d requires true/false as next argument");
+          return false;
+        }
+      }
+
+      if(args[i].equals("-m")){
+        if(args[i+1]!=null){
+          String modeString=args[i+1];
+          if(modeString.equalsIgnoreCase("greedy")){
+            MODE = GREEDY;
+          }else if(modeString.equalsIgnoreCase("selective")){
+            //MODE = SELECTIVE;
+          }else if(modeString.equalsIgnoreCase("file")){
+            //MODE = FILE;
+          }else{
+            println("Invalid mode choice, defaulting to Greedy");
+            MODE = GREEDY;
+          }
+
+        }else{
+          println("-m requires mode as next argument");
+          return false;
+        }
+      }
+    }
+  }
+  return true;
 }
 
 void draw() {
@@ -34,7 +109,7 @@ void draw() {
 }
 
 void encodeMessage(byte[] messageArray) {
-  int bytesPerFrame = (int) (Math.ceil(messageArray.length / allFrames.length));
+  int bytesPerFrame = (int) (Math.ceil(1.0 * messageArray.length / allFrames.length));
   int bytesEncoded = 0;
   int frame = 0;
   
