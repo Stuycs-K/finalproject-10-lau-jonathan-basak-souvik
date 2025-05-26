@@ -2,9 +2,12 @@ import gifAnimation.*;
 import java.util.Arrays;
 
 final static int GREEDY = 0;
+final static int STEGO = 3;
 final static int REDLAST2 = -196609;
 
 int MODE = GREEDY;
+String PLANE = "red";
+int LAYER = 0;
 String PLAINTEXT = "This";
 String DISPLAYMODE = "true";
 String INPUTFILENAME = "rickroll-roll.gif";
@@ -47,6 +50,86 @@ void setup() {
   test = resizeImage(test, 600, 600);
   blackAndWhite(test);
   image(test, 0, 0);
+}
+
+void draw() {
+  //image(animation, 0, 0);
+}
+
+void encodeMessage(int[] messageArray) {
+  int bytesPerFrame = (int) (Math.ceil(1.0 * messageArray.length / allFrames.length));
+  int bytesEncoded = 0;
+  int frame = 0;
+  
+  while (bytesEncoded < messageArray.length) {
+    int start = bytesPerFrame * frame;
+    int end  = Math.min(messageArray.length, start + bytesPerFrame);
+    modifyImage(allFrames[frame], Arrays.copyOfRange(messageArray, start, end));
+    bytesEncoded += bytesPerFrame;
+    frame++;
+  }
+}
+
+void modifyImage(PImage img, int[] messageSegment) {
+  img.loadPixels();
+  if (MODE == GREEDY) {
+    
+    for (int i=0; i<messageSegment.length + 4; i++) {
+      //setting last 2 bits of red
+      img.pixels[i] &= REDLAST2;
+      if (i < messageSegment.length) {
+        img.pixels[i] |= messageSegment[i] << 16;
+      } else {
+        img.pixels[i] |= 3 << 16;
+      }
+    }
+    
+  } else if (MODE == STEGO) {
+    for (int i=0; i<messageSegment.length; i++) {
+      int c = img.pixels[i];
+      if (PLANE.equals("red")) {
+        int newRed = ((int) red(img.pixels[i])) & ~(1 << LAYER) | ((messageSegment[i] & 1) << LAYER);
+        img.pixels[i] = color(newRed, green(c), blue(c));
+      } else if (PLANE.equals("green")) {
+        int newGreen = ((int) green(img.pixels[i])) & ~(1 << LAYER) | ((messageSegment[i] & 1) << LAYER);
+        img.pixels[i] = color(red(c), newGreen, blue(c));
+      } else if (PLANE.equals("blue")) {
+        int newBlue = ((int) blue(img.pixels[i])) & ~(1 << LAYER) | ((messageSegment[i] & 1) << LAYER);
+        img.pixels[i] = color(red(c), green(c), newBlue);
+      }
+    }
+  }
+  img.updatePixels();
+}
+
+int[] readMessage(){
+  if (MODE == GREEDY) {
+    //return PLAINTEXT.getBytes();
+  }
+  return null;
+}
+
+//Only works well for padding an image
+PImage resizeImage(PImage img, int targetWidth, int targetHeight) {
+  PImage newImage = createImage(targetWidth, targetHeight, RGB);
+  newImage.loadPixels();
+  newImage.copy(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height);
+  newImage.updatePixels();
+  return newImage;
+}
+
+void blackAndWhite(PImage img) {
+  for (int i=0; i<img.pixels.length; i++) {
+    float red = red(img.pixels[i]);
+    float green = green(img.pixels[i]);
+    float blue = blue(img.pixels[i]);
+    if ((red+green+blue) / 3 < 128) {
+      img.pixels[i] = color(0, 0, 0);
+    } else {
+      img.pixels[i] = color(255, 255, 255);
+    }
+  }
+  img.updatePixels();
 }
 
 boolean parseArgs(){
@@ -97,7 +180,10 @@ boolean parseArgs(){
             //MODE = SELECTIVE;
           }else if(modeString.equalsIgnoreCase("file")){
             //MODE = FILE;
-          }else{
+          }else if(modeString.equalsIgnoreCase("stego")){
+            MODE = STEGO;
+          }
+          else{
             println("Invalid mode choice, defaulting to Greedy");
             MODE = GREEDY;
           }
@@ -110,70 +196,4 @@ boolean parseArgs(){
     }
   }
   return true;
-}
-
-void draw() {
-  //image(animation, 0, 0);
-}
-
-void encodeMessage(byte[] messageArray) {
-  int bytesPerFrame = (int) (Math.ceil(1.0 * messageArray.length / allFrames.length));
-  int bytesEncoded = 0;
-  int frame = 0;
-  
-  while (bytesEncoded < messageArray.length) {
-    int start = bytesPerFrame * frame;
-    int end  = Math.min(messageArray.length, start + bytesPerFrame);
-    modifyImage(allFrames[frame], Arrays.copyOfRange(messageArray, start, end));
-    bytesEncoded += bytesPerFrame;
-    frame++;
-  }
-}
-
-void modifyImage(PImage img, byte[] messageSegment) {
-  img.loadPixels();
-  if (MODE == GREEDY) {
-    
-    for (int i=0; i<messageSegment.length + 4; i++) {
-      //setting last 2 bits of red
-      img.pixels[i] &= REDLAST2;
-      if (i < messageSegment.length) {
-        img.pixels[i] |= messageSegment[i] << 16;
-      } else {
-        img.pixels[i] |= 3 << 16;
-      }
-    }
-    
-  }
-  img.updatePixels();
-}
-
-byte[] readMessage(){
-  if (MODE == GREEDY) {
-    return PLAINTEXT.getBytes();
-  }
-  return null;
-}
-
-//Only works well for padding an image
-PImage resizeImage(PImage img, int targetWidth, int targetHeight) {
-  PImage newImage = createImage(targetWidth, targetHeight, RGB);
-  newImage.loadPixels();
-  newImage.copy(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height);
-  newImage.updatePixels();
-  return newImage;
-}
-
-void blackAndWhite(PImage img) {
-  for (int i=0; i<img.pixels.length; i++) {
-    float red = red(img.pixels[i]);
-    float green = green(img.pixels[i]);
-    float blue = blue(img.pixels[i]);
-    if ((red+green+blue) / 3 < 128) {
-      img.pixels[i] = color(0, 0, 0);
-    } else {
-      img.pixels[i] = color(255, 255, 255);
-    }
-  }
-  img.updatePixels();
 }
