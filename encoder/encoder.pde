@@ -5,7 +5,7 @@ final static int GREEDY = 0;
 final static int STEGO = 3;
 final static int REDLAST2 = -196609;
 
-int MODE = GREEDY;
+int MODE = STEGO;
 String PLANE = "red";
 int LAYER = 0;
 String PLAINTEXT = "This";
@@ -17,7 +17,7 @@ Gif animation;
 PImage[] allFrames;
 
 void setup() {
-  size(1200,1000);
+  size(10,10);
   //if (args == null) {
   //  println("no arguments provided");
   //  println("flags: -i INPUTFILENAME -o OUTPUTFILENAME -p PLAINTEXT (text or filename depending on mode) -d DISPLAYMODE (true/false) -m MODE (GREEDY/SELECTIVE/FILE)");
@@ -45,15 +45,18 @@ void setup() {
   //output.finish();
   
   
-  PImage test = loadImage("rick.png");
-  System.out.println(test.width);
-  test = resizeImage(test, 600, 600);
-  blackAndWhite(test);
-  image(test, 0, 0);
+  PImage original = loadImage("plains.png");
+  PImage secret = loadImage("rick.png");
+  secret = resizeImage(secret, original.width, original.height);
+  secret.loadPixels();
+  blackAndWhite(secret);
+  modifyImage(original, secret.pixels);
+  original.save("encoded.png");
 }
 
 void draw() {
-  //image(animation, 0, 0);
+  exit();
+  return;
 }
 
 void encodeMessage(int[] messageArray) {
@@ -88,13 +91,13 @@ void modifyImage(PImage img, int[] messageSegment) {
     for (int i=0; i<messageSegment.length; i++) {
       int c = img.pixels[i];
       if (PLANE.equals("red")) {
-        int newRed = ((int) red(img.pixels[i])) & ~(1 << LAYER) | ((messageSegment[i] & 1) << LAYER);
+        int newRed = ((int) red(img.pixels[i])) & ~(1 << LAYER) | ((~messageSegment[i] & 1) << LAYER);
         img.pixels[i] = color(newRed, green(c), blue(c));
       } else if (PLANE.equals("green")) {
-        int newGreen = ((int) green(img.pixels[i])) & ~(1 << LAYER) | ((messageSegment[i] & 1) << LAYER);
+        int newGreen = ((int) green(img.pixels[i])) & ~(1 << LAYER) | ((~messageSegment[i] & 1) << LAYER);
         img.pixels[i] = color(red(c), newGreen, blue(c));
       } else if (PLANE.equals("blue")) {
-        int newBlue = ((int) blue(img.pixels[i])) & ~(1 << LAYER) | ((messageSegment[i] & 1) << LAYER);
+        int newBlue = ((int) blue(img.pixels[i])) & ~(1 << LAYER) | ((~messageSegment[i] & 1) << LAYER);
         img.pixels[i] = color(red(c), green(c), newBlue);
       }
     }
@@ -113,7 +116,7 @@ int[] readMessage(){
 PImage resizeImage(PImage img, int targetWidth, int targetHeight) {
   PImage newImage = createImage(targetWidth, targetHeight, RGB);
   newImage.loadPixels();
-  newImage.copy(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height);
+  newImage.copy(img, 0, 0, img.width, img.height, 0, 0, targetWidth, targetHeight);
   newImage.updatePixels();
   return newImage;
 }
