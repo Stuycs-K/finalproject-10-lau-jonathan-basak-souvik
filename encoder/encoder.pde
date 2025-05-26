@@ -7,7 +7,7 @@ final static int REDLAST2 = -196609;
 
 int MODE = STEGO;
 String PLANE = "red";
-int LAYER = 5;
+int LAYER = 6;
 String PLAINTEXT = "myeyes.gif";
 String DISPLAYMODE = "true";
 String INPUTFILENAME = "rickroll-roll.gif";
@@ -36,7 +36,7 @@ void setup() {
   //encode message and export to gif file
   encodeMessage(readMessage());
   
-  GifMaker output = new GifMaker(this, OUTPUTFILENAME);
+  GifMaker output = new GifMaker(this, OUTPUTFILENAME, 256);
   output.setRepeat(0);
   output.setTransparent(0,0,0);
   for (int i=0; i<allFrames.length; i++) {
