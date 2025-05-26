@@ -14,7 +14,7 @@ Gif animation;
 PImage[] allFrames;
 
 void setup() {
-  size(1200,600);
+  size(1200,1000);
   //if (args == null) {
   //  println("no arguments provided");
   //  println("flags: -i INPUTFILENAME -o OUTPUTFILENAME -p PLAINTEXT (text or filename depending on mode) -d DISPLAYMODE (true/false) -m MODE (GREEDY/SELECTIVE/FILE)");
@@ -27,18 +27,26 @@ void setup() {
   //}
   
   //read input gif
-  animation = new Gif(this, "rickroll-roll.gif");
-  allFrames = Gif.getPImages(this, "rickroll-roll.gif");
+  //animation = new Gif(this, INPUTFILENAME);
+  //allFrames = Gif.getPImages(this, INPUTFILENAME);
   
-  //encode message and export to gif file
-  encodeMessage(readMessage());
-  GifMaker output = new GifMaker(this, OUTPUTFILENAME);
-  output.setRepeat(0);
-  output.setTransparent(0,0,0);
-  for (int i=0; i<allFrames.length; i++) {
-    output.addFrame(allFrames[i]);
-  }
-  output.finish();
+  ////encode message and export to gif file
+  //encodeMessage(readMessage());
+  
+  //GifMaker output = new GifMaker(this, OUTPUTFILENAME);
+  //output.setRepeat(0);
+  //output.setTransparent(0,0,0);
+  //for (int i=0; i<allFrames.length; i++) {
+  //  output.addFrame(allFrames[i]);
+  //}
+  //output.finish();
+  
+  
+  PImage test = loadImage("rick.png");
+  System.out.println(test.width);
+  test = resizeImage(test, 600, 600);
+  blackAndWhite(test);
+  image(test, 0, 0);
 }
 
 boolean parseArgs(){
@@ -105,7 +113,7 @@ boolean parseArgs(){
 }
 
 void draw() {
-  image(animation, 0, 0);
+  //image(animation, 0, 0);
 }
 
 void encodeMessage(byte[] messageArray) {
@@ -145,4 +153,27 @@ byte[] readMessage(){
     return PLAINTEXT.getBytes();
   }
   return null;
+}
+
+//Only works well for padding an image
+PImage resizeImage(PImage img, int targetWidth, int targetHeight) {
+  PImage newImage = createImage(targetWidth, targetHeight, RGB);
+  newImage.loadPixels();
+  newImage.copy(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height);
+  newImage.updatePixels();
+  return newImage;
+}
+
+void blackAndWhite(PImage img) {
+  for (int i=0; i<img.pixels.length; i++) {
+    float red = red(img.pixels[i]);
+    float green = green(img.pixels[i]);
+    float blue = blue(img.pixels[i]);
+    if ((red+green+blue) / 3 < 128) {
+      img.pixels[i] = color(0, 0, 0);
+    } else {
+      img.pixels[i] = color(255, 255, 255);
+    }
+  }
+  img.updatePixels();
 }
