@@ -1,4 +1,3 @@
-import java.util.Arrays;
 
 final static int GREEDY = 0;
 final static int STEGO = 3;
@@ -25,10 +24,15 @@ void setup() {
   //  return;
   //}
   
-  
-  
-  
-  
+  //Testing saving text as file and deleting
+  background(0);
+  textSize(50);
+  text("jellyfish jammers", 450, 350);
+  save("jelly.png");
+  File f = new File("jelly.png");
+  if (f.exists()) {
+    f.delete();
+  }
 }
 
 void draw() {
