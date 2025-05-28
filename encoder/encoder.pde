@@ -1,21 +1,19 @@
+final static int IMG = 0;
+final static int TXT = 1;
 
-final static int GREEDY = 0;
-final static int STEGO = 3;
-final static int REDLAST2 = -196609;
-
-int MODE = STEGO;
+int MODE = IMG;
 String PLANE = "red";
 int LAYER = 0;
-String PLAINTEXT = "myeyes.gif";
+String MESSAGE = "myeyes.gif";
 String DISPLAYMODE = "true";
-String INPUTFILENAME = "rickroll-roll.gif";
-String OUTPUTFILENAME = "rickroll-encoded.gif";
+String INPUTFILENAME = "";
+String OUTPUTFILENAME = "";
 
 void setup() {
   size(1000,800);
   //if (args == null) {
   //  println("no arguments provided");
-  //  println("flags: -i INPUTFILENAME -o OUTPUTFILENAME -p PLAINTEXT (text or filename depending on mode) -d DISPLAYMODE (true/false) -m MODE (GREEDY/SELECTIVE/FILE)");
+  //  println("flags: -i INPUTFILENAME -o OUTPUTFILENAME -e MESSAGE (text or filename depending on mode) -d DISPLAYMODE (true/false) -m MODE (IMAGE/TEXT) -p PLANE (red/green/blue) -l LAYER(0-7)");
   //  return;
   //}
   
@@ -40,33 +38,25 @@ void draw() {
   //return;
 }
 
-void modifyImage(PImage img, int[] messageSegment) {
+void modifyImage(PImage img, int[] imagePixels) {
   img.loadPixels();
-  if (MODE == STEGO) {
     //messageSegment is the black and white pixels to hide
-    for (int i=0; i<messageSegment.length; i++) {
-      int c = img.pixels[i];
-      if (PLANE.equals("red")) {
-        int newRed = ((int) red(img.pixels[i])) & ~(1 << LAYER) | ((~messageSegment[i] & 1) << LAYER);
-        img.pixels[i] = color(newRed, green(c), blue(c));
-      } else if (PLANE.equals("green")) {
-        int newGreen = ((int) green(img.pixels[i])) & ~(1 << LAYER) | ((~messageSegment[i] & 1) << LAYER);
-        img.pixels[i] = color(red(c), newGreen, blue(c));
-      } else if (PLANE.equals("blue")) {
-        int newBlue = ((int) blue(img.pixels[i])) & ~(1 << LAYER) | ((~messageSegment[i] & 1) << LAYER);
-        img.pixels[i] = color(red(c), green(c), newBlue);
-      }
+  for (int i=0; i<imagePixels.length; i++) {
+    int c = img.pixels[i];
+    if (PLANE.equals("red")) {
+      int newRed = ((int) red(img.pixels[i])) & ~(1 << LAYER) | ((~imagePixels[i] & 1) << LAYER);
+      img.pixels[i] = color(newRed, green(c), blue(c));
+    } else if (PLANE.equals("green")) {
+      int newGreen = ((int) green(img.pixels[i])) & ~(1 << LAYER) | ((~imagePixels[i] & 1) << LAYER);
+      img.pixels[i] = color(red(c), newGreen, blue(c));
+    } else if (PLANE.equals("blue")) {
+      int newBlue = ((int) blue(img.pixels[i])) & ~(1 << LAYER) | ((~imagePixels[i] & 1) << LAYER);
+      img.pixels[i] = color(red(c), green(c), newBlue);
     }
   }
   img.updatePixels();
 }
 
-int[] readMessage(){
-  
-  return null;
-}
-
-//Only works well for padding an image
 PImage resizeImage(PImage img, int targetWidth, int targetHeight) {
   PImage newImage = createImage(targetWidth, targetHeight, RGB);
   newImage.loadPixels();
@@ -101,11 +91,11 @@ boolean parseArgs(){
         }
       }
 
-      if(args[i].equals("-p")){
+      if(args[i].equals("-e")){
         try{
-          PLAINTEXT=args[i+1];
+          MESSAGE=args[i+1];
         }catch(Exception e){
-          println("-p requires quoted plaintext as next argument");
+          println("-e requires quoted plaintext as next argument");
           return false;
         }
       }
@@ -131,22 +121,46 @@ boolean parseArgs(){
       if(args[i].equals("-m")){
         if(args[i+1]!=null){
           String modeString=args[i+1];
-          if(modeString.equalsIgnoreCase("greedy")){
-            MODE = GREEDY;
-          }else if(modeString.equalsIgnoreCase("selective")){
-            //MODE = SELECTIVE;
-          }else if(modeString.equalsIgnoreCase("file")){
-            //MODE = FILE;
-          }else if(modeString.equalsIgnoreCase("stego")){
-            MODE = STEGO;
-          }
-          else{
-            println("Invalid mode choice, defaulting to Greedy");
-            MODE = GREEDY;
+          if(modeString.equalsIgnoreCase("image")){
+            MODE = IMG;
+          } else if (modeString.equalsIgnoreCase("text")) {
+            MODE = TXT;
+          } else {
+            println("Invalid mode choice, defaulting to Image");
+            MODE = IMG;
           }
 
-        }else{
+        } else{
           println("-m requires mode as next argument");
+          return false;
+        }
+      }
+      
+      if (args[i].equals("-p")) {
+        if (args[i+1] != null) {
+          String modeString = args[i+1];
+          if (modeString.equalsIgnoreCase("red") || modeString.equalsIgnoreCase("green") || modeString.equalsIgnoreCase("blue")) {
+            PLANE = modeString.toLowerCase();
+          } else {
+            println("Invalid plane choice, defaulting to red");
+            PLANE = "red";
+          }
+        } else {
+          println("-p requires plane as next argument");
+          return false;
+        }
+      }
+      
+      if (args[i].equals("-l")) {
+        if (args[i+1] != null) {
+          try {
+            LAYER = Integer.parseInt(args[i+1]);
+          } catch (NumberFormatException e) {
+            println("-l requires integer as next argument");
+            return false;
+          }
+        } else {
+          println("-l requires integer as next argument");
           return false;
         }
       }
