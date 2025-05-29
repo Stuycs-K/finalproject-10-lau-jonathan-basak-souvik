@@ -1,5 +1,5 @@
-final static int IMG = 0;
-final static int TXT = 1;
+int IMG = 0;
+int TXT = 1;
 
 int MODE = IMG;
 String PLANE = "red";
