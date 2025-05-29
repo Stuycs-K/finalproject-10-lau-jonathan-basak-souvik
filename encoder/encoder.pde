@@ -1,3 +1,5 @@
+import com.hamoid.*;
+
 int IMG = 0;
 int TXT = 1;
 
@@ -10,7 +12,7 @@ String INPUTFILENAME = "";
 String OUTPUTFILENAME = "";
 
 void setup() {
-  size(1000,800);
+  size(1200,675);
   //if (args == null) {
   //  println("no arguments provided");
   //  println("flags: -i INPUTFILENAME -o OUTPUTFILENAME -e MESSAGE (text or filename depending on mode) -d DISPLAYMODE (true/false) -m MODE (IMAGE/TEXT) -p PLANE (red/green/blue) -l LAYER(0-7)");
@@ -21,6 +23,15 @@ void setup() {
   //  println("Parsing argument error;");
   //  return;
   //}
+  //VideoExport videoExport = new VideoExport(this);
+  //videoExport.startMovie();
+  PImage img = loadImage("encoded.png");
+  VideoExport videoExport = new VideoExport(this, "video");
+  videoExport.startMovie();
+  for (int i=0; i<30; i++) {
+    videoExport.saveFrame();
+  }
+  videoExport.endMovie();
 }
 
 void draw() {
