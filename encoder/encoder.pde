@@ -4,28 +4,32 @@ int TXT = 1;
 int MODE = IMG;
 String PLANE = "red";
 int LAYER = 0;
-String MESSAGE = "myeyes.gif";
+String MESSAGE = "jammertest";
 String DISPLAYMODE = "true";
-String INPUTFILENAME = "";
-String OUTPUTFILENAME = "";
+String INPUTFILENAME = "plains.png";
+String OUTPUTFILENAME = "goofy.png";
 
 void setup() {
   size(1000,800);
-  //if (args == null) {
-  //  println("no arguments provided");
-  //  println("flags: -i INPUTFILENAME -o OUTPUTFILENAME -e MESSAGE (text or filename depending on mode) -d DISPLAYMODE (true/false) -m MODE (IMAGE/TEXT) -p PLANE (red/green/blue) -l LAYER(0-7)");
-  //  return;
-  //}
+  if (args == null) {
+    println("no arguments provided");
+    println("flags: -i INPUTFILENAME -o OUTPUTFILENAME -e MESSAGE (text or filename depending on mode) -d DISPLAYMODE (true/false) -m MODE (IMAGE/TEXT) -p PLANE (red/green/blue) -l LAYER(0-7)");
+    return;
+  }
   
-  //if (!parseArgs()) {
-  //  println("Parsing argument error;");
-  //  return;
-  //}
+  if (!parseArgs()) {
+    println("Parsing argument error;");
+    return;
+  }
+  PImage INPUT = loadImage(INPUTFILENAME); //image of the input file
+  PImage MESSAGEIMG = resizeImage(messageToPicture(MESSAGE), INPUT.width, INPUT.height); //image of the message (adjusted height and width)
+  modifyImage(INPUT, MESSAGEIMG.pixels); //INPUT has been modified
+  INPUT.save(OUTPUTFILENAME); //the INPUT image has been saved
 }
 
 void draw() {
-  //exit();
-  //return;
+  if (DISPLAYMODE == "true") {
+  }
 }
 
 void modifyImage(PImage img, int[] imagePixels) {
