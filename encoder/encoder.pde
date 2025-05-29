@@ -21,16 +21,6 @@ void setup() {
   //  println("Parsing argument error;");
   //  return;
   //}
-  
-  //Testing saving text as file and deleting
-  background(0);
-  textSize(50);
-  text("jellyfish jammers", 450, 350);
-  save("jelly.png");
-  File f = new File("jelly.png");
-  if (f.exists()) {
-    f.delete();
-  }
 }
 
 void draw() {
