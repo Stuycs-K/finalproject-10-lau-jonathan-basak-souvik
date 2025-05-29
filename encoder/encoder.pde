@@ -79,6 +79,14 @@ void blackAndWhite(PImage img) {
   img.updatePixels();
 }
 
+PImage messageToPicture(String message) { 
+  background(0); 
+  textSize(50); 
+  text(message, 450, 350); 
+  PImage image = get(); 
+  return image; 
+}
+
 boolean parseArgs(){
   if (args != null) {
     for (int i = 0; i < args.length; i++){
