@@ -14,3 +14,6 @@ Wrote an algorithm for hiding an image within another to be revealed by stegsolv
 
 ### 2025-05-27: Cleanup
 Due to the way the GIF library works, encoding messages in bytes does not work, as GIFs are not lossless. So we are moving to steganography; we already have an image steganography function set up, and have plans for the user encoding text as well.
+
+### 2025-05-28: Text
+For encoding text, we'll disaplay the text to the sketch, save that sketch as an image, then run the same function as previously written. Right now we're working on how to format the text so that it's an appropriate size and position.
