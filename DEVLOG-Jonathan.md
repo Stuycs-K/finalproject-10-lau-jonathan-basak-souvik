@@ -10,7 +10,7 @@ Testing out how reading gifs and images will work in Processing (works similarly
 50 min
 
 ### 2025-05-16 - Gif stego (its a bit weird!)
-The library is rather conventional, but exporting the gif file is a little strange. Gif format only supports the RGB channels, but the alpha channel **CAN** be selected. I'm not entirely sure if this will cause problems later on. Otherwise, just more testing with the library, since this GifMaker class is the only way we can export the gif out.
+The GifAnimation library is rather conventional, but exporting the gif file is a little strange. Gif format only supports the RGB channels, but the alpha channel **CAN** be selected. I'm not entirely sure if this will cause problems later on. Otherwise, just more testing with the library, since this GifMaker class is the only way we can export the gif out.
 
 ```
 GifMaker gifExport = new GifMaker(PApplet parent, String filename, int quality, int transparentColor);
@@ -60,24 +60,14 @@ GIF format is lossy (even though compression is lossless) so we'll need to adjus
   We are creating the base code for the stegsolve encoder, and keeping it simple since we got to work fast. If we have enough time, we can perhaps add more encoding methods, but a basic skeleton is always good. 
   
 40min
-  
-### 2025-05-27
 
-
-40min
-
-### 2025-05-28
-
-
-1hr
-
-### 2025-05-29
-
+### 2025-05-27 - 
+Pair programming with Souvik. 
 
 50min
 
 ### 2025-05-28 -
-More pair programming with Souvik. Today we worked on
+More pair programming with Souvik. Today we worked on . I needed to fix processing the messageImg since there wasn't a method created for that yet, but that was rather simple to fix at home.
 
 1hr
 
@@ -86,5 +76,3 @@ More pair programming with Souvik. Today we worked on
 
 1hr 30min
 
-### 2024-01-03 - Brief description
-Expanded description including how much time was spent on task.
