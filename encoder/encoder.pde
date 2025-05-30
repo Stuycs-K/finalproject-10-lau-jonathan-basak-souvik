@@ -1,4 +1,4 @@
-import com.hamoid.*;
+import processing.video.*;
 
 int IMG = 0;
 int TXT = 1;
@@ -11,32 +11,33 @@ String DISPLAYMODE = "true";
 String INPUTFILENAME = "";
 String OUTPUTFILENAME = "";
 
+Movie movie;
+PGraphics pg;
+
 void setup() {
-  size(1200,675);
-  //if (args == null) {
-  //  println("no arguments provided");
-  //  println("flags: -i INPUTFILENAME -o OUTPUTFILENAME -e MESSAGE (text or filename depending on mode) -d DISPLAYMODE (true/false) -m MODE (IMAGE/TEXT) -p PLANE (red/green/blue) -l LAYER(0-7)");
-  //  return;
-  //}
-  
-  //if (!parseArgs()) {
-  //  println("Parsing argument error;");
-  //  return;
-  //}
-  //VideoExport videoExport = new VideoExport(this);
+  size(1000, 600);
+  //pixelDensity(1);//match pgraphics size with video size
+  //pg = createGraphics(1000, 600);
+  //PImage img = loadImage("encoded.png");
+  //VideoExport videoExport = new VideoExport(this, "video.mov", pg);
   //videoExport.startMovie();
-  PImage img = loadImage("encoded.png");
-  VideoExport videoExport = new VideoExport(this, "video");
-  videoExport.startMovie();
-  for (int i=0; i<30; i++) {
-    videoExport.saveFrame();
-  }
-  videoExport.endMovie();
+  //for (int i=0; i<30; i++) {
+  //  pg.beginDraw();
+  //  pg.image(img, 0, 0);
+  //  pg.endDraw();
+  //  videoExport.saveFrame();
+  //}
+  //videoExport.endMovie();
+  movie = new Movie(this, "video.mov");
+  movie.play();
 }
 
 void draw() {
-  //exit();
-  //return;
+  if (movie.available()) {
+    movie.read();
+    image(movie, 0, 0);
+    movie.save("pls.png");
+  }
 }
 
 void modifyImage(PImage img, int[] imagePixels) {
