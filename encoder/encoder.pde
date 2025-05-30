@@ -4,10 +4,12 @@ int TXT = 1;
 int MODE = IMG;
 String PLANE = "red";
 int LAYER = 0;
-String MESSAGE = "jammertest";
+String MESSAGE = "testing";
 String DISPLAYMODE = "true";
 String INPUTFILENAME = "plains.png";
-String OUTPUTFILENAME = "goofy.png";
+String OUTPUTFILENAME = "testoutput.png";
+
+PImage INPUT;
 
 void setup() {
   size(1000,800);
@@ -16,19 +18,48 @@ void setup() {
     println("flags: -i INPUTFILENAME -o OUTPUTFILENAME -e MESSAGE (text or filename depending on mode) -d DISPLAYMODE (true/false) -m MODE (IMAGE/TEXT) -p PLANE (red/green/blue) -l LAYER(0-7)");
     return;
   }
-  
   if (!parseArgs()) {
     println("Parsing argument error;");
     return;
   }
-  PImage INPUT = loadImage(INPUTFILENAME); //image of the input file
-  PImage MESSAGEIMG = resizeImage(messageToPicture(MESSAGE), INPUT.width, INPUT.height); //image of the message (adjusted height and width)
-  modifyImage(INPUT, MESSAGEIMG.pixels); //INPUT has been modified
-  INPUT.save(OUTPUTFILENAME); //the INPUT image has been saved
+  
+  println("Attempting to load input.");
+  INPUT = loadImage(INPUTFILENAME);
+  if (INPUT == null) {
+    println("Error loading input file: " + INPUTFILENAME);
+    return;
+  }
+  
+  println("Attempting to load message as image.");
+  PImage MESSAGEIMG;
+  if (MODE == TXT) {
+    MESSAGEIMG = loadImage(MESSAGE);
+    if (MESSAGEIMG == null) {
+      println("Could not load message image from: " + MESSAGE);
+      return;
+    }
+  } 
+  else {
+    MESSAGEIMG = messageToPicture(MESSAGE);
+  }
+  MESSAGEIMG = resizeImage(MESSAGEIMG, INPUT.width, INPUT.height);
+  blackAndWhite(MESSAGEIMG); 
+  modifyImage(INPUT, MESSAGEIMG.pixels);
+  INPUT.save(OUTPUTFILENAME);
+  println("Encoded image saved to: " + OUTPUTFILENAME);
+
+  if (!DISPLAYMODE.equals("true")) {
+    exit();
+  }
 }
 
 void draw() {
-  if (DISPLAYMODE == "true") {
+  if (DISPLAYMODE.equals("true")) {
+    background(50);
+    if (INPUT != null) {
+      image(INPUT, 0, 0);
+    }
+    noLoop();
   }
 }
 
@@ -88,7 +119,7 @@ boolean parseArgs(){
         try{
           INPUTFILENAME=args[i+1];
         }catch(Exception e){
-          println("-o requires filename as next argument");
+          println("-i requires filename as next argument");
           return false;
         }
       }
