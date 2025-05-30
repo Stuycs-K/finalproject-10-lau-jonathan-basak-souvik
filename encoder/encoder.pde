@@ -1,6 +1,6 @@
 int IMG = 0;
 int TXT = 1;
-#this is a test
+
 int MODE = IMG;
 String PLANE = "red";
 int LAYER = 0;
