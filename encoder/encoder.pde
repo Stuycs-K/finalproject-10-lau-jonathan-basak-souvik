@@ -60,9 +60,9 @@ void encodeGif() {
   String[] planes = {"red", "green", "blue"};
   allFrames = Gif.getPImages(this, MESSAGE);
   PImage MESSAGEIMG;
-  for (int i=0; i<12; i++) {
-    PLANE = planes[i/4];
-    LAYER = i/4;
+  for (int i=0; i<9; i++) {
+    PLANE = planes[i/3];
+    LAYER = i%3;
     if (i<allFrames.length) {
       MESSAGEIMG = allFrames[i];
     } else {
