@@ -32,18 +32,18 @@ void setup() {
   
   println("Attempting to load message as image.");
   PImage MESSAGEIMG;
-  if (MODE == TXT) {
+  if (MODE == IMG) {
     MESSAGEIMG = loadImage(MESSAGE);
     if (MESSAGEIMG == null) {
       println("Could not load message image from: " + MESSAGE);
       return;
     }
-  } 
+  }
   else {
-    MESSAGEIMG = messageToPicture(MESSAGE);
+    MESSAGEIMG = messageToPicture(MESSAGE, INPUT.width, INPUT.height);
   }
   MESSAGEIMG = resizeImage(MESSAGEIMG, INPUT.width, INPUT.height);
-  blackAndWhite(MESSAGEIMG); 
+  blackAndWhite(MESSAGEIMG);
   modifyImage(INPUT, MESSAGEIMG.pixels);
   INPUT.save(OUTPUTFILENAME);
   println("Encoded image saved to: " + OUTPUTFILENAME);
@@ -65,7 +65,6 @@ void draw() {
 
 void modifyImage(PImage img, int[] imagePixels) {
   img.loadPixels();
-    //messageSegment is the black and white pixels to hide
   for (int i=0; i<imagePixels.length; i++) {
     int c = img.pixels[i];
     if (PLANE.equals("red")) {
@@ -104,12 +103,14 @@ void blackAndWhite(PImage img) {
   img.updatePixels();
 }
 
-PImage messageToPicture(String message) { 
-  background(0); 
-  textSize(50); 
-  text(message, 450, 350); 
-  PImage image = get(); 
-  return image; 
+PImage messageToPicture(String message, int w, int h) {
+  PGraphics pg = createGraphics(w, h);
+  pg.beginDraw();
+  pg.background(0);
+  pg.textSize(50); 
+  pg.text(message, 0, h/2);
+  pg.endDraw();
+  return pg.get();
 }
 
 boolean parseArgs(){
