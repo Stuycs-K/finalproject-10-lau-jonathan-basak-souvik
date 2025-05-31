@@ -57,11 +57,23 @@ void draw() {
 }
 
 void encodeGif() {
-  String[] layers = {"red", "green", "blue"};
+  String[] planes = {"red", "green", "blue"};
   allFrames = Gif.getPImages(this, MESSAGE);
+  PImage MESSAGEIMG;
   for (int i=0; i<12; i++) {
-    
+    PLANE = planes[i/4];
+    LAYER = i/4;
+    if (i<allFrames.length) {
+      MESSAGEIMG = allFrames[i];
+    } else {
+      MESSAGEIMG = createImage(INPUT.width, INPUT.height, RGB);
+    }
+    MESSAGEIMG = resizeImage(MESSAGEIMG, INPUT.width, INPUT.height);
+    blackAndWhite(MESSAGEIMG);
+    modifyImage(INPUT, MESSAGEIMG.pixels);
   }
+  INPUT.save(OUTPUTFILENAME);
+  println("Encoded gif saved to: " + OUTPUTFILENAME);
 }
 
 void encodeImage() {
@@ -179,6 +191,8 @@ boolean parseArgs(){
             MODE = IMG;
           } else if (modeString.equalsIgnoreCase("text")) {
             MODE = TXT;
+          } else if (modeString.equalsIgnoreCase("gif")) {
+            MODE = JIF;
           } else {
             println("Invalid mode choice, defaulting to Image");
             MODE = IMG;
