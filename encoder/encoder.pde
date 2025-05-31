@@ -57,7 +57,13 @@ void draw() {
 
 void encodeGif() {
   String[] planes = {"red", "green", "blue"};
-  PImage[] allFrames = Gif.getPImages(this, MESSAGE);
+  PImage[] allFrames;
+  try {
+    allFrames = Gif.getPImages(this, MESSAGE);
+  } catch (NullPointerException e) {
+    println("Could not load gif from: " + MESSAGE);
+    return;
+  }
   PImage MESSAGEIMG;
   for (int i=0; i<9; i++) {
     PLANE = planes[i/3];
