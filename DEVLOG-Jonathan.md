@@ -21,11 +21,11 @@ GifMaker gifExport = new GifMaker(PApplet parent, String filename, int quality, 
 40 min
 
 ### 2025-05-17 - More gif stego
-
+Started with the skeleton
 45 min
 
 ### 2025-05-18 - Base Skeleton
-
+As the name suggests, we are continuing working on the skeleton of the code, but we've already begun the encoding methods. Since gif format can be converted into an array of images, this process is quite easy and simple. We are likely to tackle GREEDY first, since that's the easiest and we also have past code for it.
 40 min
 
 ### 2025-05-19 - Greedy Encode
@@ -38,7 +38,7 @@ Did pair programming with Souvik and remembered that I needed to do the devlog! 
 40 min
 
 ### 2025-05-21 - More encoding
-Trying to choose the encoding methods to use the gif encoder
+Trying to choose the encoding methods to use for the gif encoder (GREEDY, SELECTIVE), but keeping in mind how we will decode it.
 50min
 
 ### 2025-05-22 - Greedy Decode
