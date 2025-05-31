@@ -1,5 +1,8 @@
+import gifAnimation.*;
+
 int IMG = 0;
 int TXT = 1;
+int JIF = 2;
 
 int MODE = IMG;
 String PLANE = "red";
@@ -10,6 +13,7 @@ String INPUTFILENAME = "plains.png";
 String OUTPUTFILENAME = "testoutput.png";
 
 PImage INPUT;
+PImage[] allFrames;
 
 void setup() {
   size(1000,800);
@@ -30,7 +34,37 @@ void setup() {
     return;
   }
   
-  println("Attempting to load message as image.");
+  println("Attempting to encode message");
+  if (MODE == JIF) {
+    encodeGif();
+  } else {
+    encodeImage();
+  }
+
+  if (!DISPLAYMODE.equals("true")) {
+    exit();
+  }
+}
+
+void draw() {
+  if (DISPLAYMODE.equals("true")) {
+    background(50);
+    if (INPUT != null) {
+      image(INPUT, 0, 0);
+    }
+    noLoop();
+  }
+}
+
+void encodeGif() {
+  String[] layers = {"red", "green", "blue"};
+  allFrames = Gif.getPImages(this, MESSAGE);
+  for (int i=0; i<12; i++) {
+    
+  }
+}
+
+void encodeImage() {
   PImage MESSAGEIMG;
   if (MODE == IMG) {
     MESSAGEIMG = loadImage(MESSAGE);
@@ -47,20 +81,6 @@ void setup() {
   modifyImage(INPUT, MESSAGEIMG.pixels);
   INPUT.save(OUTPUTFILENAME);
   println("Encoded image saved to: " + OUTPUTFILENAME);
-
-  if (!DISPLAYMODE.equals("true")) {
-    exit();
-  }
-}
-
-void draw() {
-  if (DISPLAYMODE.equals("true")) {
-    background(50);
-    if (INPUT != null) {
-      image(INPUT, 0, 0);
-    }
-    noLoop();
-  }
 }
 
 void modifyImage(PImage img, int[] imagePixels) {
