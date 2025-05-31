@@ -13,7 +13,6 @@ String INPUTFILENAME = "plains.png";
 String OUTPUTFILENAME = "testoutput.png";
 
 PImage INPUT;
-PImage[] allFrames;
 
 void setup() {
   size(1000,800);
@@ -58,7 +57,7 @@ void draw() {
 
 void encodeGif() {
   String[] planes = {"red", "green", "blue"};
-  allFrames = Gif.getPImages(this, MESSAGE);
+  PImage[] allFrames = Gif.getPImages(this, MESSAGE);
   PImage MESSAGEIMG;
   for (int i=0; i<9; i++) {
     PLANE = planes[i/3];
