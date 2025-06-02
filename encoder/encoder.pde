@@ -4,17 +4,19 @@ int TXT = 1;
 int MODE = IMG;
 String PLANE = "red";
 int LAYER = 0;
-String MESSAGE = "testing";
+String MESSAGE = "";
 String DISPLAYMODE = "true";
-String INPUTFILENAME = "plains.png";
-String OUTPUTFILENAME = "testoutput.png";
+String INPUTFILENAME = "";
+String OUTPUTFILENAME = "";
 
 PImage INPUT;
+Gui GUI;
 
 void setup() {
-  size(1000,800);
+  size(1200,600);
+  GUI = new Gui(800, 0, 400, 600);
   if (args == null) {
-    println("no arguments provided");
+    println("no arguments provided: gui enabled");
     println("flags: -i INPUTFILENAME -o OUTPUTFILENAME -e MESSAGE (text or filename depending on mode) -d DISPLAYMODE (true/false) -m MODE (IMAGE/TEXT) -p PLANE (red/green/blue) -l LAYER(0-7)");
     return;
   }
@@ -57,9 +59,21 @@ void draw() {
   if (DISPLAYMODE.equals("true")) {
     background(50);
     if (INPUT != null) {
-      image(INPUT, 0, 0);
+      image(INPUT, 0, 0, 800, 600);
     }
-    noLoop();
+    GUI.draw();
+  }
+}
+
+void mousePressed() {
+  if (GUI != null) {
+    GUI.mousePressed();
+  }
+}
+
+void keyPressed() {
+  if (GUI != null) {
+    GUI.keyPressed();
   }
 }
 
@@ -70,10 +84,12 @@ void modifyImage(PImage img, int[] imagePixels) {
     if (PLANE.equals("red")) {
       int newRed = ((int) red(img.pixels[i])) & ~(1 << LAYER) | ((~imagePixels[i] & 1) << LAYER);
       img.pixels[i] = color(newRed, green(c), blue(c));
-    } else if (PLANE.equals("green")) {
+    } 
+    else if (PLANE.equals("green")) {
       int newGreen = ((int) green(img.pixels[i])) & ~(1 << LAYER) | ((~imagePixels[i] & 1) << LAYER);
       img.pixels[i] = color(red(c), newGreen, blue(c));
-    } else if (PLANE.equals("blue")) {
+    } 
+    else if (PLANE.equals("blue")) {
       int newBlue = ((int) blue(img.pixels[i])) & ~(1 << LAYER) | ((~imagePixels[i] & 1) << LAYER);
       img.pixels[i] = color(red(c), green(c), newBlue);
     }
@@ -96,7 +112,8 @@ void blackAndWhite(PImage img) {
     float blue = blue(img.pixels[i]);
     if ((red+green+blue) / 3 < 128) {
       img.pixels[i] = color(0, 0, 0);
-    } else {
+    } 
+    else {
       img.pixels[i] = color(255, 255, 255);
     }
   }
@@ -115,56 +132,62 @@ PImage messageToPicture(String message, int w, int h) {
 
 boolean parseArgs(){
   if (args != null) {
-    for (int i = 0; i < args.length; i++){
-      if(args[i].equals("-i")){
-        try{
+    for (int i = 0; i < args.length; i++) {
+      if(args[i].equals("-i")) {
+        try {
           INPUTFILENAME=args[i+1];
-        }catch(Exception e){
+        }
+        catch(Exception e) {
           println("-i requires filename as next argument");
           return false;
         }
       }
 
-      if(args[i].equals("-e")){
-        try{
+      if(args[i].equals("-e")) {
+        try {
           MESSAGE=args[i+1];
-        }catch(Exception e){
+        }
+        catch(Exception e) {
           println("-e requires quoted plaintext as next argument");
           return false;
         }
       }
 
       if(args[i].equals("-o")){
-        if(args[i+1]!=null){
+        if(args[i+1]!=null) {
           OUTPUTFILENAME=args[i+1];
-        }else{
+        }
+        else {
           println("-o requires filename as next argument");
           return false;
         }
       }
 
-      if(args[i].equals("-d")){
-        if(args[i+1]!=null){
+      if(args[i].equals("-d")) {
+        if(args[i+1]!=null) {
           DISPLAYMODE=args[i+1];
-        }else{
+        }
+        else {
           println("-d requires true/false as next argument");
           return false;
         }
       }
 
-      if(args[i].equals("-m")){
-        if(args[i+1]!=null){
+      if(args[i].equals("-m")) {
+        if(args[i+1]!=null) {
           String modeString=args[i+1];
-          if(modeString.equalsIgnoreCase("image")){
+          if(modeString.equalsIgnoreCase("image")) {
             MODE = IMG;
-          } else if (modeString.equalsIgnoreCase("text")) {
+          } 
+          else if (modeString.equalsIgnoreCase("text")) {
             MODE = TXT;
-          } else {
+          } 
+          else {
             println("Invalid mode choice, defaulting to Image");
             MODE = IMG;
           }
-
-        } else{
+        } 
+        else {
           println("-m requires mode as next argument");
           return false;
         }
@@ -175,25 +198,28 @@ boolean parseArgs(){
           String modeString = args[i+1];
           if (modeString.equalsIgnoreCase("red") || modeString.equalsIgnoreCase("green") || modeString.equalsIgnoreCase("blue")) {
             PLANE = modeString.toLowerCase();
-          } else {
+          } 
+          else {
             println("Invalid plane choice, defaulting to red");
             PLANE = "red";
           }
-        } else {
+        } 
+        else {
           println("-p requires plane as next argument");
           return false;
         }
-      }
-      
+      } 
       if (args[i].equals("-l")) {
         if (args[i+1] != null) {
           try {
             LAYER = Integer.parseInt(args[i+1]);
-          } catch (NumberFormatException e) {
+          } 
+          catch (NumberFormatException e) {
             println("-l requires integer as next argument");
             return false;
           }
-        } else {
+        } 
+        else {
           println("-l requires integer as next argument");
           return false;
         }
