@@ -88,9 +88,12 @@ class Gui { //The gui is composed of several things.
       MODE = modeSwitch.CURRENTVAL.equals("IMAGE") ? IMG : TXT;
       
       try {
-        LAYER = Integer.parseInt(layerBox.TXT.trim());
-        if (LAYER < 0 || LAYER > 7) throw new NumberFormatException();
-      } catch (NumberFormatException e) {
+        LAYER = Integer.parseInt(layerBox.TXT);
+        if (LAYER < 0 || LAYER > 7) {
+          throw new NumberFormatException();
+        }
+      } 
+      catch (NumberFormatException e) {
         println("Invalid layer value. Must be between 0 and 7.");
         return;
       }
@@ -113,7 +116,8 @@ class Gui { //The gui is composed of several things.
           println("Could not load message image from: " + MESSAGE);
           return;
         }
-      } else {
+      } 
+      else {
         MESSAGEIMG = messageToPicture(MESSAGE, INPUT.width, INPUT.height);
       }
 
