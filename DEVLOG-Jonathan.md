@@ -74,7 +74,7 @@ GIF format is lossy (even though compression is lossless) so we'll need to adjus
 40min
 
 ### 2025-05-27 - Applying Text
-Pair programming with Souvik. Entailed
+Pair programming with Souvik. Entailed 
 
 50min
 
@@ -91,16 +91,20 @@ Args should be all fixed, but some of the naming conventions for the variables a
 ### 2025-05-30 - GUI: Fancy Textbox
 I'm working on the GUI now. This likely means that the GUI will be used instead of the command line, but we'll see where that takes us. 
 Today I worked on creating the Textbox class, which was more of a pain than I thought. I wanted to make it look nice, so I added an indication point and made sure the text couldn't overflow to the right or left of the text box. (proper text scrolling)
+
 1hr 30min
 
 ### 2025-05-31 - GUI: Switches and Buttons
 Implemented the Button superclass and Switch subclass (inheritance!). They work as they should, but I'm aware I may Tneed to deactivate buttons/switches depending on the mode. 
+
 2hr
 
 ### 2025-06-01 - GUI: Finished!
-Needed to add code catching errors, as well as designing the GUI class, the full implementation of the Textbox, Switch and Button classes into a functional GUI. Basically entailed a lot of changing values so everything looked just right. Planning to add an "error console" within the GUI that is created if any parameters create an error case.
+Needed to add code catching errors, as well as designing the GUI class, the full implementation of the Textbox, Switch and Button classes into a functional GUI. Basically entailed a lot of changing values so everything looks just right. Planning to add an "error console" within the GUI that is created if any parameters create an error case.
+
 2hr
 
-### 2025-06-02 - Reimplementing GIF encoding method
-Guess what, we're readding the GIF encoding method from the original conception of the project. It'll only be a 9 frame gif (any gif with more frames will be condensed into nine frames) condensed into 
+### 2025-06-02 - Reimplementing GIF encoding method: It returns!
+Guess what, we're readding the GIF encoding method from the original conception of the project. It'll only be a 9 frame gif (any gif with more frames will be condensed into nine frames) encoded into the rgb channels of a singular photo. Neat right? This is not lossy, and we can utilize that GifMaker class that we've been so eager on using. Hurray! After I finish the error case console tonight, I may end up doing that internal stegsolve. (since I still have a bunch of the GUI left)
 
+time pending
