@@ -88,3 +88,13 @@ Args should be all fixed, but some of the naming conventions for the variables a
 
 1hr 30min
 
+### 2025-05-30
+
+### 2025-05-31
+
+2hr
+
+### 2025-06-01
+
+2hr
+
