@@ -22,7 +22,11 @@ class Switch extends Button {
     else {
       fill(180);
     }
-    stroke(0);
+    if (ACTIVE) {
+      stroke(0);
+    } else {
+      stroke(255, 0, 0);
+    }
     rect(x, y, w, h, 5);
     fill(0);
     textAlign(CENTER, CENTER);

@@ -1,5 +1,6 @@
 class Button {
   int x, y, w, h;
+  boolean ACTIVE = true;
 
   Button(int x, int y, int w, int h) {
     this.x = x;
@@ -25,4 +26,6 @@ class Button {
     textAlign(CENTER, CENTER);
     text(name, x + w / 2, y + h / 2);
   }
+  
+  
 }

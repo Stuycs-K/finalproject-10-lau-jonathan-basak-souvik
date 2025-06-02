@@ -28,7 +28,7 @@ class Gui { //The gui is composed of several things.
     layerBox = new Textbox(x + 20, y + 180, 60, 30);
     
     //Switch
-    modeSwitch = new Switch(x + 250, y + 30, 100, 30, new String[]{"TEXT", "IMAGE"});
+    modeSwitch = new Switch(x + 250, y + 30, 100, 30, new String[]{"TEXT", "IMAGE", "GIF"});
     planeSwitch = new Switch(x + 250, y + 80, 100, 30, new String[]{"red", "green", "blue"});
     
     //Button
@@ -76,8 +76,18 @@ class Gui { //The gui is composed of several things.
     
     if (modeSwitch.IsValidZone()) {
       modeSwitch.nextVal();
+      if (modeSwitch.CURRENTVAL.equals("TEXT")) {
+        MODE = TXT;
+        planeSwitch.ACTIVE = true;
+      } else if (modeSwitch.CURRENTVAL.equals("GIF")) {
+        MODE = JIF;
+        planeSwitch.ACTIVE = false;
+      } else {
+        MODE = IMG;
+        planeSwitch.ACTIVE = true;
+      }
     }
-    else if (planeSwitch.IsValidZone()) {
+    else if (planeSwitch.IsValidZone() && planeSwitch.ACTIVE) {
       planeSwitch.nextVal();
     }
     else if (applyEncode.IsValidZone()) { //basically check for error limbo
@@ -85,17 +95,18 @@ class Gui { //The gui is composed of several things.
       OUTPUTFILENAME = outputFile.TXT;
       MESSAGE = inputBox.TXT;
       PLANE = planeSwitch.CURRENTVAL;
-      MODE = modeSwitch.CURRENTVAL.equals("IMAGE") ? IMG : TXT;
       
-      try {
-        LAYER = Integer.parseInt(layerBox.TXT);
-        if (LAYER < 0 || LAYER > 7) {
-          throw new NumberFormatException();
+      if (MODE != JIF) {
+        try {
+          LAYER = Integer.parseInt(layerBox.TXT);
+          if (LAYER < 0 || LAYER > 7) {
+            throw new NumberFormatException();
+          }
+        } 
+        catch (NumberFormatException e) {
+          println("Invalid layer value. Must be between 0 and 7.");
+          return;
         }
-      } 
-      catch (NumberFormatException e) {
-        println("Invalid layer value. Must be between 0 and 7.");
-        return;
       }
 
       if (INPUTFILENAME.equals("") || OUTPUTFILENAME.equals("") || MESSAGE.equals("")) {
@@ -108,26 +119,14 @@ class Gui { //The gui is composed of several things.
         println("Could not load input file: " + INPUTFILENAME);
         return;
       }
-
-      PImage MESSAGEIMG;
-      if (MODE == IMG) {
-        MESSAGEIMG = loadImage(MESSAGE);
-        if (MESSAGEIMG == null) {
-          println("Could not load message image from: " + MESSAGE);
-          return;
-        }
+      
+      if (MODE == JIF) {
+        encodeGif();
+        println("encoding gif");
+      } else {
+        encodeImage();
       } 
-      else {
-        MESSAGEIMG = messageToPicture(MESSAGE, INPUT.width, INPUT.height);
-      }
-
-      MESSAGEIMG = resizeImage(MESSAGEIMG, INPUT.width, INPUT.height);
-      blackAndWhite(MESSAGEIMG);
-      modifyImage(INPUT, MESSAGEIMG.pixels);
-      INPUT.save(OUTPUTFILENAME);
-      println("Image saved to: " + OUTPUTFILENAME);
     }
-    
   }
   
   void keyPressed() {

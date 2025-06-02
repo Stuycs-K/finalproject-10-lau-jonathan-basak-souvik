@@ -68,7 +68,7 @@ class Textbox {
       else if (key == ENTER || key == RETURN) {
         ACTIVE = false;
       }
-      else if (key != CODED && key != BACKSPACE) {
+      else if (key != CODED && key != BACKSPACE && key != TAB) {
         TXT += key;
       }
     }

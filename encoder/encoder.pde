@@ -1,5 +1,8 @@
+import gifAnimation.*;
+
 int IMG = 0;
 int TXT = 1;
+int JIF = 2;
 
 int MODE = IMG;
 String PLANE = "red";
@@ -33,6 +36,40 @@ void setup() {
   }
   
   println("Attempting to load message as image.");
+  if (MODE == JIF) {
+    encodeGif();
+  } else {
+    encodeImage();
+  }
+}
+
+void encodeGif() {
+  String[] planes = {"red", "green", "blue"};
+  PImage[] allFrames;
+  try {
+    allFrames = Gif.getPImages(this, MESSAGE);
+  } catch (NullPointerException e) {
+    println("Could not load gif from: " + MESSAGE);
+    return;
+  }
+  PImage MESSAGEIMG;
+  for (int i=0; i<9; i++) {
+    PLANE = planes[i/3];
+    LAYER = i%3;
+    if (i<allFrames.length) {
+      MESSAGEIMG = allFrames[i];
+    } else {
+      MESSAGEIMG = createImage(INPUT.width, INPUT.height, RGB);
+    }
+    MESSAGEIMG = resizeImage(MESSAGEIMG, INPUT.width, INPUT.height);
+    blackAndWhite(MESSAGEIMG);
+    modifyImage(INPUT, MESSAGEIMG.pixels);
+  }
+  INPUT.save(OUTPUTFILENAME);
+  println("Encoded gif saved to: " + OUTPUTFILENAME);
+}
+
+void encodeImage() {
   PImage MESSAGEIMG;
   if (MODE == IMG) {
     MESSAGEIMG = loadImage(MESSAGE);
@@ -49,11 +86,7 @@ void setup() {
   modifyImage(INPUT, MESSAGEIMG.pixels);
   INPUT.save(OUTPUTFILENAME);
   println("Encoded image saved to: " + OUTPUTFILENAME);
-
-  if (!DISPLAYMODE.equals("true")) {
-    exit();
   }
-}
 
 void draw() {
   if (DISPLAYMODE.equals("true")) {
