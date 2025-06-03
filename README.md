@@ -38,7 +38,7 @@ Now that you have your encoded image, lets extract the goods!
 
 ## Who Did What?
 
-Souvik: stegsolve + main encoding methods + gif functionality
+Souvik: main encoding methods + gif functionality (encode/decode)
 
 Jonathan: stegsolve + graphical interface + some extra encoding
 
