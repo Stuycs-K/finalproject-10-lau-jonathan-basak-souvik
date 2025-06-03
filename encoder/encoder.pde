@@ -86,7 +86,28 @@ void encodeImage() {
   modifyImage(INPUT, MESSAGEIMG.pixels);
   INPUT.save(OUTPUTFILENAME);
   println("Encoded image saved to: " + OUTPUTFILENAME);
+}
+
+PImage extractImage(PImage img, String plane, int layer) {
+  PImage output = createImage(img.width, img.height, RGB);
+  for (int i=0; i<img.pixels.length; i++) {
+    int bit = 0;
+    if (plane.equals("red")) {
+      bit = ((int) red(img.pixels[i])) & ~(255 & ~(1 << layer));
+    } else if (plane.equals("green")) {
+      bit = ((int) green(img.pixels[i])) & ~(255 & ~(1 << layer));
+    } else {
+      bit = ((int) blue(img.pixels[i])) & ~(255 & ~(1 << layer));
+    }
+    if (bit == 0) {
+      output.pixels[i] = color(255, 255, 255);
+    } else {
+      output.pixels[i] = color(0, 0, 0);
+    }
   }
+  output.updatePixels();
+  return output;
+}
 
 void draw() {
   if (DISPLAYMODE.equals("true")) {
