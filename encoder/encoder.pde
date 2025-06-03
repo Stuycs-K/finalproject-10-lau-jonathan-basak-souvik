@@ -10,7 +10,7 @@ int LAYER = 0;
 String MESSAGE = "";
 String DISPLAYMODE = "true";
 String INPUTFILENAME = "";
-String OUTPUTFILENAME = "eyes.gif";
+String OUTPUTFILENAME = "";
 
 PImage INPUT;
 Gui GUI;

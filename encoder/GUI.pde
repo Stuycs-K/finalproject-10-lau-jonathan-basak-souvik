@@ -159,6 +159,7 @@ class Gui { //The gui is composed of several things.
         animation = null;
         exported = false;
         if (MODE == IMG || MODE == TXT) {
+          //Edit this since we're doing arrows for stegsolve
           PImage extracted = extractImage(INPUT, PLANE, LAYER);
           extracted.save("data/"+OUTPUTFILENAME);
         } else {
