@@ -21,14 +21,17 @@ GifMaker gifExport = new GifMaker(PApplet parent, String filename, int quality, 
 40 min
 
 ### 2025-05-17 - More gif stego
-Started with the skeleton
+Started with the skeleton, then worked on the 
+
 45 min
 
 ### 2025-05-18 - Base Skeleton
 As the name suggests, we are continuing working on the skeleton of the code, but we've already begun the encoding methods. Since gif format can be converted into an array of images, this process is quite easy and simple. We are likely to tackle GREEDY first, since that's the easiest and we also have past code for it.
+
 40 min
 
 ### 2025-05-19 - Greedy Encode
+As yesterday mentioned, we are working on GREEDY encode today
 
 1hr 10min
 
@@ -38,13 +41,16 @@ Did pair programming with Souvik and remembered that I needed to do the devlog! 
 40 min
 
 ### 2025-05-21 - More encoding
-Trying to choose the encoding methods to use for the gif encoder (GREEDY, SELECTIVE), but keeping in mind how we will decode it.
+Trying to determine which encoding methods to use for the gif encoder (GREEDY, SELECTIVE), but keeping in mind how we will decode it.
+
 50min
 
-### 2025-05-22 - Greedy Decode
-
+### 2025-05-22 - Decode...
+Souvik's working on decode while I work on the encoding methods. Progress is going fine, though I'm having very little time to work on this project due to AP week. 
 40 min
+
 ### 2025-05-23 - Even more encoding
+Basically adding onto 2025-05-21's and 2025-05-22's work. Nothing really is new, though so I can't elaborate on this devlog much further.
 
 1hr
 
@@ -64,7 +70,7 @@ I need to do more research on whether the kernel transformation will be lossless
 50min
 
 ### 2025-05-25 - Unforseen mishaps
-GIF format is lossy (even though compression is lossless) so we'll need to adjust our code to work for a stegsolve encoder/decoder instead. The code (sorta?) transfers over, so it'll be fine I think? If you are reading this Mr. K, I hope that you are understanding that we needed to do a 180 degree turn on our project!
+GIF format is lossy (even though compression is lossless) so we'll need to adjust our code to work for a stegsolve encoder/decoder instead. The code (sorta?) transfers over, so it'll be fine I think? If you are reading this Mr. K, I hope that you are understanding that we needed to do a 180 degree turn on our project.
 
 45min
 
@@ -74,7 +80,7 @@ GIF format is lossy (even though compression is lossless) so we'll need to adjus
 40min
 
 ### 2025-05-27 - Applying Text
-Pair programming with Souvik. Entailed 
+Pair programming with Souvik. Entailed figuring out how to encode the text into the input image. Here's how we did it. Create a black picture with text as the base, then use LSB with the black and white version of the input. Now the image has the encoded text in it. Though, 
 
 50min
 
@@ -90,21 +96,23 @@ Args should be all fixed, but some of the naming conventions for the variables a
 
 ### 2025-05-30 - GUI: Fancy Textbox
 I'm working on the GUI now. This likely means that the GUI will be used instead of the command line, but we'll see where that takes us. 
-Today I worked on creating the Textbox class, which was more of a pain than I thought. I wanted to make it look nice, so I added an indication point and made sure the text couldn't overflow to the right or left of the text box. (proper text scrolling)
+Today I worked on creating the Textbox class, which was more of a pain than I thought. I wanted to make it look nice, so I added an insertion point and made sure the text couldn't overflow to the right or left of the text box. (proper text scrolling)
 
 1hr 30min
 
 ### 2025-05-31 - GUI: Switches and Buttons
-Implemented the Button superclass and Switch subclass (inheritance!). They work as they should, but I'm aware I may Tneed to deactivate buttons/switches depending on the mode. 
+Implemented the Button superclass and Switch subclass (inheritance!). They work as they should, but I'm aware I may Tneed to deactivate buttons/switches depending on the mode. Trying to make the classes as easily malleable as possible, because I know I'll need to accomodate specific changes to our program if they come.
 
 2hr
 
 ### 2025-06-01 - GUI: Finished!
-Needed to add code catching errors, as well as designing the GUI class, the full implementation of the Textbox, Switch and Button classes into a functional GUI. Basically entailed a lot of changing values so everything looks just right. Planning to add an "error console" within the GUI that is created if any parameters create an error case.
+Needed to add code catching errors, as well as designing the GUI class, the full implementation of the Textbox, Switch and Button classes into a functional GUI. Basically entailed a lot of changing values so everything looks just right. Planning to add an "error console" within the GUI that is created if any parameters create an error case. Starting to think that the GUI will overtake the makefile/terminal method of running the program, since the parseArgs method is taking up a lot of space and is cluttering otherwise clean code.
 
 2hr
 
 ### 2025-06-02 - Reimplementing GIF encoding method: It returns!
-Guess what, we're readding the GIF encoding method from the original conception of the project. It'll only be a 9 frame gif (any gif with more frames will be condensed into nine frames) encoded into the rgb channels of a singular photo. Neat right? This is not lossy, and we can utilize that GifMaker class that we've been so eager on using. Hurray! After I finish the error case console tonight, I may end up doing that internal stegsolve. (since I still have a bunch of the GUI left)
+Guess what, we're readding the GIF encoding method from the original conception of the project. It'll only be a 9 frame gif (any gif with more frames will be condensed into nine frames) encoded into the rgb channels of a singular photo. Neat right? This is not lossy, and we can utilize that GifMaker class that we've been so eager on using. Hurray! After I finish the error case console tonight, I may end up doing that internal stegsolve. (since I still have a bunch of the GUI space left)
 
-time pending
+1hr
+
+### 2025-06-03 - The Final Day
