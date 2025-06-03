@@ -10,7 +10,7 @@ Testing out how reading gifs and images will work in Processing (works similarly
 50 min
 
 ### 2025-05-16 - Gif stego (its a bit weird!)
-The GifAnimation library is rather conventional, but exporting the gif file is a little strange. Gif format only supports the RGB channels, but the alpha channel **CAN** be selected. I'm not entirely sure if this will cause problems later on. Otherwise, just more testing with the library, since this GifMaker class is the only way we can export the gif out.
+The GifAnimation library is rather conventional, but exporting the gif file is a little strange. Gif format only supports the RGB channels, but the alpha channel **CAN** be chosen using a method. I'm not entirely sure if this will cause problems later on. Otherwise, just more testing with the library, since this GifMaker class is the only way we can export the gif out.
 
 ```
 GifMaker gifExport = new GifMaker(PApplet parent, String filename, int quality, int transparentColor);
@@ -21,7 +21,8 @@ GifMaker gifExport = new GifMaker(PApplet parent, String filename, int quality, 
 40 min
 
 ### 2025-05-17 - More gif stego
-Started with the skeleton, then worked on the 
+We are starting the skeleton today. Well, we already started it a little bit earlier, but today marks the definite day in the devlog. 
+Args, using GifMaker, it's all here.
 
 45 min
 
@@ -31,7 +32,7 @@ As the name suggests, we are continuing working on the skeleton of the code, but
 40 min
 
 ### 2025-05-19 - Greedy Encode
-As yesterday mentioned, we are working on GREEDY encode today
+As yesterday mentioned, we are working on GREEDY encode today, which should be just an implementation of the GREEDY encode from the original assignment it was in. The issue more likely lies in parsing the new args, since that's a whole slurry of code I don't want to deal with right now.
 
 1hr 10min
 
@@ -47,6 +48,7 @@ Trying to determine which encoding methods to use for the gif encoder (GREEDY, S
 
 ### 2025-05-22 - Decode...
 Souvik's working on decode while I work on the encoding methods. Progress is going fine, though I'm having very little time to work on this project due to AP week. 
+
 40 min
 
 ### 2025-05-23 - Even more encoding
@@ -111,7 +113,7 @@ Needed to add code catching errors, as well as designing the GUI class, the full
 2hr
 
 ### 2025-06-02 - Reimplementing GIF encoding method: It returns!
-Guess what, we're readding the GIF encoding method from the original conception of the project. It'll only be a 9 frame gif (any gif with more frames will be condensed into nine frames) encoded into the rgb channels of a singular photo. Neat right? This is not lossy, and we can utilize that GifMaker class that we've been so eager on using. Hurray! After I finish the error case console tonight, I may end up doing that internal stegsolve. (since I still have a bunch of the GUI space left)
+Guess what, we're readding the GIF encoding method from the original conception of the project. It'll only be a 9 frame gif (any gif with more frames will be condensed into nine frames) encoded into the rgb channels of a singular photo. Neat right? This is not lossy, and we can utilize that GifMaker class that we've been so eager on using. Hurray! After I finish the error console tonight, I may end up doing that internal stegsolve. (since I still have a bunch of the GUI space left)
 
 1hr
 
