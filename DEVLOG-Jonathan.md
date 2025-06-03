@@ -113,7 +113,7 @@ Needed to add code catching errors, as well as designing the GUI class, the full
 2hr
 
 ### 2025-06-02 - Reimplementing GIF encoding method: It returns!
-Guess what, we're readding the GIF encoding method from the original conception of the project. It'll only be a 9 frame gif (any gif with more frames will be condensed into nine frames) encoded into the rgb channels of a singular photo. Neat right? This is not lossy, and we can utilize that GifMaker class that we've been so eager on using. Hurray! After I finish the error console tonight, I may end up doing that internal stegsolve. (since I still have a bunch of the GUI space left)
+Guess what, we're readding the GIF encoding method from the original conception of the project. It'll only be a 9 frame gif (any gif with more frames will be condensed into nine frames) encoded into the rgb channels of a singular photo. Neat right? This is not lossy, and we can utilize that GifMaker class that we've been so eager on using. Hurray! Tomorrow, lets do stegsolve. (since I still have a bunch of the GUI space left)
 
 1hr
 
