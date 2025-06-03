@@ -21,7 +21,8 @@ GifMaker gifExport = new GifMaker(PApplet parent, String filename, int quality, 
 40 min
 
 ### 2025-05-17 - More gif stego
-Started with the skeleton, then worked on the 
+We are starting the skeleton today. Well, we already started it a little bit earlier, but today marks the definite day in the devlog. 
+Args, using GifMaker, it's all here.
 
 45 min
 
@@ -47,6 +48,7 @@ Trying to determine which encoding methods to use for the gif encoder (GREEDY, S
 
 ### 2025-05-22 - Decode...
 Souvik's working on decode while I work on the encoding methods. Progress is going fine, though I'm having very little time to work on this project due to AP week. 
+
 40 min
 
 ### 2025-05-23 - Even more encoding
