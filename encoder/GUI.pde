@@ -44,14 +44,14 @@ class Gui { //The gui is composed of several things.
     textAlign(LEFT, CENTER);
     text("INPUT FILE", x+20, y+20);
     text("OUTPUT FILE", x+20, y+70);
-    text("MESSAGE/IMG INPUT", x+20, y+120);
+    text("MESSAGE/IMG/GIF INPUT", x+20, y+120);
     text("LAYER (0-7)", x+20, y+170);
     
     text("ENCODING MODE", x+250, y+20);
     text("PLANE COLOR", x+250, y+70);
     
     textSize(30);
-    text("STEGOJAM© V1.1", x+20, y+240);
+    text("STEGOJAM© V2.0", x+20, y+240);
     textSize(12);
     
     inputFile.draw();
@@ -96,6 +96,11 @@ class Gui { //The gui is composed of several things.
       planeSwitch.nextVal();
     } else if (exportSwitch.IsValidZone()) {
       exportSwitch.nextVal();
+      if (exportSwitch.CURRENTVAL.equals("ENCODE")) {
+        inputBox.USABLE = true;
+      } else {
+        inputBox.USABLE = false;
+      }
     }
     else if (apply.IsValidZone()) { //basically check for error limbo
     
