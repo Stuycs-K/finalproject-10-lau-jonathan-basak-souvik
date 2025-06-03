@@ -24,13 +24,19 @@ class Switch extends Button {
     }
     if (ACTIVE) {
       stroke(0);
-    } else {
+    } 
+    else {
       stroke(255, 0, 0);
     }
     rect(x, y, w, h, 5);
     fill(0);
     textAlign(CENTER, CENTER);
-    text(CURRENTVAL, x + w / 2, y + h / 2);
+    if (ACTIVE) {
+      text(CURRENTVAL, x + w / 2, y + h / 2);
+    }
+    else {
+      text("NONE", x + w / 2, y + h / 2);
+    }
   }
   
 }

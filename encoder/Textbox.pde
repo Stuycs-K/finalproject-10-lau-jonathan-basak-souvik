@@ -2,6 +2,7 @@ class Textbox {
   int x, y, w, h;
   String TXT = "";
   boolean ACTIVE = false;
+  boolean USABLE = true;
   boolean SHOWINSERTION = true;
   int INSERTIONTIMER = 0;
   int PADDING = 5;
@@ -23,7 +24,12 @@ class Textbox {
   }
 
   void draw() {
-    stroke(0);
+    if (USABLE) {
+      stroke(0);
+    }
+    else {
+      stroke(255,0,0);
+    }
     fill(255);
     rect(x, y, w, h, 5); 
 
@@ -33,8 +39,12 @@ class Textbox {
     String visibleText = getVisibleText();
     float textX = x + PADDING;
     float textY = y + h / 2;
-    text(visibleText, textX, textY);
-    
+    if (USABLE) {
+      text(visibleText, textX, textY);
+    }
+    else {
+      text("", textX, textY);
+    }
     if (ACTIVE && SHOWINSERTION) { //The actual blink for the insertion point
       float cursorX = textX + textWidth(visibleText);
       float cursorY1 = y + PADDING;
@@ -57,7 +67,7 @@ class Textbox {
   }
 
   void mousePressed() {
-    ACTIVE = mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h;
+    ACTIVE = mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h && USABLE;
   }
 
   void keyPressed() {

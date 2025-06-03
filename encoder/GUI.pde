@@ -79,12 +79,15 @@ class Gui { //The gui is composed of several things.
       if (modeSwitch.CURRENTVAL.equals("TEXT")) {
         MODE = TXT;
         planeSwitch.ACTIVE = true;
+        layerBox.USABLE = true;
       } else if (modeSwitch.CURRENTVAL.equals("GIF")) {
         MODE = JIF;
         planeSwitch.ACTIVE = false;
+        layerBox.USABLE = false;
       } else {
         MODE = IMG;
         planeSwitch.ACTIVE = true;
+        layerBox.USABLE = true;
       }
     }
     else if (planeSwitch.IsValidZone() && planeSwitch.ACTIVE) {
