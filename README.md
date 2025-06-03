@@ -3,9 +3,7 @@
  
 ### The Jellyfish Jammers
 
-Jonathan Lau
-
-Souvik Basak
+Jonathan Lau + Souvik Basak
        
 ### Project Description:
 
@@ -27,7 +25,7 @@ As for the decoding process, stegsolve for the image and message is the same; yo
 ## How to Use The Program
 
 ### Encoding
-Begin by running the program in Processing. You'll see a GUI and a black screen, showing that you haven't inputted an image yet. The program will **NOT** encode or decode anything if you put in invalid arguments. (10 as a plane number, png extension in the ) In order to encode anything, make sure the ENCODE/DECODE switch is set to **ENCODE**. Next, type in your input filename in the INPUT FILE textbox (the file you are encoding) and then your output filename in the OUTPUT FILE textbox. The next step will be dependent on what encoding mode you switch to.
+Begin by running the program in Processing. You'll see a GUI and a black screen, showing that you haven't inputted an image yet. The program will **NOT** encode or decode anything if you put in any invalid arguments into the GUI. (10 as a plane number, attempting to use a png in gif encoding, etc.) In order to encode anything, first make sure that the ENCODE/DECODE switch is set to **ENCODE**. Next, type in your input filename in the INPUT FILE textbox (the file you are encoding) and then your output filename in the OUTPUT FILE textbox. The next step will be dependent on what encoding mode you switch to.
 
 If you chose **MESSAGE**, then you need to input a string of characters (quotations aren't necessary). If you chose **IMAGE**, you need to input filename (or path for a filename) for an image. If you chose **GIF**, you'll notice some of the boxes are now redded out. You can no longer type in these boxes since gif encoding works much differently than the other encoding modes. Still, input the filename for a gif that the program can access.
 
@@ -36,6 +34,7 @@ For **MESSAGE** or **IMAGE** encoding, you can choose what color channel and wha
 The encoded image will now be displayed to the left of the GUI, and now we can move on to our next step: **Decoding**.
 
 ### Decoding 
+Now that you have your encoded image, lets extract the goods!
 
 ## Who Did What?
 
