@@ -17,3 +17,15 @@ Due to the way the GIF library works, encoding messages in bytes does not work, 
 
 ### 2025-05-28: Text
 For encoding text, we'll disaplay the text to the sketch, save that sketch as an image, then run the same function as previously written. Right now we're working on how to format the text so that it's an appropriate size and position.
+
+### 2025-05-31: Back to gif
+Instead of exporting a gif to encode a gif, coded a way to export 9 frames of a gif (black and white) into 1 PNG. May change how many frames in an image, might consider exporting multiple images to encode a longer gif. Plan to have a gif reader.
+
+### 2025-06-01: Bug testing GUI
+Tested the GUI, and fixed various associated bugs.
+
+### 2025-06-02: Incorporating gif encode into the GUI
+Incorporated GIF encoding into the GUI, and made it so that enabling GIF mode disables certain buttons.
+
+### 2025-06-03: Stegsove
+Wrote the extractImage method, which will be used to stegsolve and when exporting a gif.
