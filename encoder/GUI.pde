@@ -12,8 +12,8 @@ class Gui { //The gui is composed of several things.
   */
   int x, y, w, h;
   Textbox inputFile, outputFile, layerBox, inputBox; 
-  Switch modeSwitch, planeSwitch;
-  Button applyEncode;
+  Switch modeSwitch, planeSwitch, exportSwitch;
+  Button apply;
   
   Gui(int x, int y, int w, int h) {
     this.x = x;
@@ -30,9 +30,10 @@ class Gui { //The gui is composed of several things.
     //Switch
     modeSwitch = new Switch(x + 250, y + 30, 100, 30, new String[]{"TEXT", "IMAGE", "GIF"});
     planeSwitch = new Switch(x + 250, y + 80, 100, 30, new String[]{"red", "green", "blue"});
+    exportSwitch = new Switch(x + 250, y + 130, 100, 30, new String[]{"ENCODE", "DECODE"});
     
     //Button
-    applyEncode = new Button(x + 250, y + 130, 120, 50); //this can be reworked into a encode/decode switch if we end up adding the stegsolve here
+    apply = new Button(x + 250, y + 180, 120, 50); //this can be reworked into a encode/decode switch if we end up adding the stegsolve here
   }
   
   void draw() {
@@ -65,7 +66,8 @@ class Gui { //The gui is composed of several things.
     
     modeSwitch.draw();
     planeSwitch.draw();
-    applyEncode.draw("ENCODE"); 
+    exportSwitch.draw();
+    apply.draw("APPLY"); 
   }
   
   void mousePressed() {
@@ -92,8 +94,11 @@ class Gui { //The gui is composed of several things.
     }
     else if (planeSwitch.IsValidZone() && planeSwitch.ACTIVE) {
       planeSwitch.nextVal();
+    } else if (exportSwitch.IsValidZone()) {
+      exportSwitch.nextVal();
     }
-    else if (applyEncode.IsValidZone()) { //basically check for error limbo
+    else if (apply.IsValidZone()) { //basically check for error limbo
+    
       INPUTFILENAME = inputFile.TXT;
       OUTPUTFILENAME = outputFile.TXT;
       MESSAGE = inputBox.TXT;
@@ -112,7 +117,7 @@ class Gui { //The gui is composed of several things.
         }
       }
 
-      if (INPUTFILENAME.equals("") || OUTPUTFILENAME.equals("") || MESSAGE.equals("")) {
+      if (INPUTFILENAME.equals("") || OUTPUTFILENAME.equals("") || (MESSAGE.equals("") && exportSwitch.CURRENTVAL.equals("ENCODE"))) {
         println("One or more required fields are empty.");
         return;
       }
@@ -123,12 +128,24 @@ class Gui { //The gui is composed of several things.
         return;
       }
       
-      if (MODE == JIF) {
-        encodeGif();
-        println("encoding gif");
+      if (exportSwitch.CURRENTVAL.equals("ENCODE")) {
+        if (MODE == JIF) {
+          encodeGif();
+          println("encoding gif");
+        } else {
+          encodeImage();
+        }
+        
       } else {
-        encodeImage();
-      } 
+        if (MODE == IMG || MODE == TXT) {
+          PImage extracted = extractImage(INPUT, PLANE, LAYER);
+          extracted.save(OUTPUTFILENAME);
+        } else {
+          GifMaker gif = extractGif(INPUT);
+          gif.finish();
+        }
+      }
+      
     }
   }
   

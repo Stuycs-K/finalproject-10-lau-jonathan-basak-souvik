@@ -112,6 +112,7 @@ PImage extractImage(PImage img, String plane, int layer) {
 GifMaker extractGif(PImage img) {
   String[] planes =  {"red", "green", "blue"};
   GifMaker gifExport = new GifMaker(this, OUTPUTFILENAME);
+  gifExport.setRepeat(0);
   for (int i=0; i<9; i++) {
     String plane = planes[i/3];
     int layer = i%3;
