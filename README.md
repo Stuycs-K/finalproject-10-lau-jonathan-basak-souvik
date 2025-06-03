@@ -11,7 +11,7 @@ Souvik Basak
 
 Stegsolve encoder and decoder with text/img/gif functionality
 
-This program is intended to encode a text message, image, or gif into an image's rgb planes while also having the ability to decode (by shifting through these planes). The gif will not have the "shift planes" functionality since the gif is encoded into all the planes of the image (nine frame gif max because otherwise you begin to start seeing the image).
+This program is intended to encode a text message, image, or gif into an image's rgb planes while also having the ability to decode (by shifting through these planes). The gif will not have the "shift planes" functionality since the gif is encoded into all of the rgb channels of the image.
 
 ### Instructions:
 
@@ -44,6 +44,6 @@ Souvik: stegsolve + main encoding methods + gif functionality
 Jonathan: stegsolve + graphical interface + some extra encoding
 
 ### Resources/ References:
-Imported Library: gifAnimation [link to source code](https://github.com/extrapixel/gif-animation)
-Links Observed: Kernels [](https://docs.gimp.org/2.8/en/plug-in-convmatrix.html)
+Imported Library: GifAnimation [source code](https://github.com/extrapixel/gif-animation)
+Links Observed (not utilized): [Kernels](https://docs.gimp.org/2.8/en/plug-in-convmatrix.html)
 
