@@ -28,4 +28,4 @@ Tested the GUI, and fixed various associated bugs.
 Incorporated GIF encoding into the GUI, and made it so that enabling GIF mode disables certain buttons.
 
 ### 2025-06-03: Stegsove
-Wrote the extractImage method, which will be used to stegsolve and when exporting a gif.
+Wrote the extractImage method, which will be used to stegsolve and when exporting a gif. Additionally wrote extractGif, which combines each black and white frame that was encoded in the image into a gif.
