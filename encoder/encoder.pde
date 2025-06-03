@@ -10,7 +10,7 @@ int LAYER = 0;
 String MESSAGE = "";
 String DISPLAYMODE = "true";
 String INPUTFILENAME = "";
-String OUTPUTFILENAME = "";
+String OUTPUTFILENAME = "eyes.gif";
 
 PImage INPUT;
 Gui GUI;
@@ -109,6 +109,17 @@ PImage extractImage(PImage img, String plane, int layer) {
   return output;
 }
 
+GifMaker extractGif(PImage img) {
+  String[] planes =  {"red", "green", "blue"};
+  GifMaker gifExport = new GifMaker(this, OUTPUTFILENAME);
+  for (int i=0; i<9; i++) {
+    String plane = planes[i/3];
+    int layer = i%3;
+    gifExport.addFrame(extractImage(img, plane, layer));
+  }
+  return gifExport;
+}
+ 
 void draw() {
   if (DISPLAYMODE.equals("true")) {
     background(50);
