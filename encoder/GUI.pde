@@ -14,12 +14,18 @@ class Gui { //The gui is composed of several things.
   Textbox inputFile, outputFile, layerBox, inputBox; 
   Switch modeSwitch, planeSwitch, exportSwitch;
   Button apply;
+  //used for displaying images and gif from the GUI class
+  PApplet parent;
+  boolean exported = false;
+  PImage decodedImage;
+  Gif animation;
   
-  Gui(int x, int y, int w, int h) {
+  Gui(int x, int y, int w, int h, PApplet parent) {
     this.x = x;
     this.y = y;
     this.w = w;
     this.h = h;
+    this.parent = parent;
     
     //Textbox
     inputFile = new Textbox(x + 20, y + 30, 200, 30);
@@ -34,6 +40,7 @@ class Gui { //The gui is composed of several things.
     
     //Button
     apply = new Button(x + 250, y + 180, 120, 50); //this can be reworked into a encode/decode switch if we end up adding the stegsolve here
+    
   }
   
   void draw() {
@@ -67,7 +74,13 @@ class Gui { //The gui is composed of several things.
     modeSwitch.draw();
     planeSwitch.draw();
     exportSwitch.draw();
-    apply.draw("APPLY"); 
+    apply.draw("APPLY");
+    
+    if (exported) {
+      if (animation != null) {
+        image(animation, 0, 0, 800, 600);
+      }
+    }
   }
   
   void mousePressed() {
@@ -142,13 +155,19 @@ class Gui { //The gui is composed of several things.
         }
         
       } else {
+        decodedImage = null;
+        animation = null;
+        exported = false;
         if (MODE == IMG || MODE == TXT) {
           PImage extracted = extractImage(INPUT, PLANE, LAYER);
-          extracted.save(OUTPUTFILENAME);
+          extracted.save("data/"+OUTPUTFILENAME);
         } else {
           GifMaker gif = extractGif(INPUT);
           gif.finish();
+          animation = new Gif(parent, OUTPUTFILENAME);
+          animation.play();
         }
+        exported = true;
       }
       
     }

@@ -17,7 +17,7 @@ Gui GUI;
 
 void setup() {
   size(1200,600);
-  GUI = new Gui(800, 0, 400, 600);
+  GUI = new Gui(800, 0, 400, 600, this);
 }
 
 void encodeGif() {
@@ -34,7 +34,7 @@ void encodeGif() {
     PLANE = planes[i/3];
     LAYER = i%3;
     if (i<allFrames.length) {
-      MESSAGEIMG = allFrames[i];
+      MESSAGEIMG = allFrames[i * allFrames.length/9];
     } else {
       MESSAGEIMG = createImage(INPUT.width, INPUT.height, RGB);
     }
@@ -42,7 +42,7 @@ void encodeGif() {
     blackAndWhite(MESSAGEIMG);
     modifyImage(INPUT, MESSAGEIMG.pixels);
   }
-  INPUT.save(OUTPUTFILENAME);
+  INPUT.save("data/"+OUTPUTFILENAME);
   println("Encoded gif saved to: " + OUTPUTFILENAME);
 }
 
@@ -61,7 +61,7 @@ void encodeImage() {
   MESSAGEIMG = resizeImage(MESSAGEIMG, INPUT.width, INPUT.height);
   blackAndWhite(MESSAGEIMG);
   modifyImage(INPUT, MESSAGEIMG.pixels);
-  INPUT.save(OUTPUTFILENAME);
+  INPUT.save("data/"+OUTPUTFILENAME);
   println("Encoded image saved to: " + OUTPUTFILENAME);
 }
 
@@ -88,12 +88,13 @@ PImage extractImage(PImage img, String plane, int layer) {
 
 GifMaker extractGif(PImage img) {
   String[] planes =  {"red", "green", "blue"};
-  GifMaker gifExport = new GifMaker(this, OUTPUTFILENAME);
+  GifMaker gifExport = new GifMaker(this, "data/"+OUTPUTFILENAME);
   gifExport.setRepeat(0);
   for (int i=0; i<9; i++) {
     String plane = planes[i/3];
     int layer = i%3;
     gifExport.addFrame(extractImage(img, plane, layer));
+    gifExport.setDelay(200);
   }
   return gifExport;
 }
@@ -101,7 +102,7 @@ GifMaker extractGif(PImage img) {
 void draw() {
   if (DISPLAYMODE.equals("true")) {
     background(50);
-    if (INPUT != null) {
+    if (INPUT != null && GUI.exportSwitch.CURRENTVAL.equals("ENCODE")) {
       image(INPUT, 0, 0, 800, 600);
     }
     GUI.draw();
