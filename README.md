@@ -46,5 +46,8 @@ Jonathan: stegsolve + graphical interface + some extra encoding
 
 ### Resources/ References:
 Imported Library: GifAnimation [source code](https://github.com/extrapixel/gif-animation)
+
 Links Observed (not utilized): [Kernels](https://docs.gimp.org/2.8/en/plug-in-convmatrix.html)
+
+[Presentation](https://drive.google.com/drive/u/0/folders/17qx8HXwiSukRT50jA3MYGXDo_amH-uux)
 
