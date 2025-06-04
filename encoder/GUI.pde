@@ -144,7 +144,7 @@ class Gui { //The gui is composed of several things.
       MESSAGE = inputBox.TXT;
       PLANE = planeSwitch.CURRENTVAL;
       
-      if (MODE != JIF) {
+      if (MODE != JIF && exportSwitch.CURRENTVAL.equals("ENCODE")) {
         try {
           LAYER = Integer.parseInt(layerBox.TXT);
           if (LAYER < 0 || LAYER > 7) {

@@ -72,46 +72,16 @@ class Stegsolve extends Button {
     } else if (currChannel >= 1 && currChannel <= 8) {
       // Red planes (layers 0-7)
       int layer = currChannel - 1;
-      cycleImg = extractPlane(INPUT, "red", layer);
+      cycleImg = extractImage(INPUT, "red", layer);
     } else if (currChannel >= 9 && currChannel <= 16) {
       // Green planes (layers 0-7)
       int layer = currChannel - 9;
-      cycleImg = extractPlane(INPUT, "green", layer);
+      cycleImg = extractImage(INPUT, "green", layer);
     } else if (currChannel >= 17 && currChannel <= 24) {
       // Blue planes (layers 0-7)
       int layer = currChannel - 17;
-      cycleImg = extractPlane(INPUT, "blue", layer);
+      cycleImg = extractImage(INPUT, "blue", layer);
     }
-  }
-  
-  PImage extractPlane(PImage img, String colorPlane, int bitLayer) {
-    PImage output = createImage(img.width, img.height, RGB);
-    output.loadPixels();
-    img.loadPixels();
-    
-    for (int i = 0; i < img.pixels.length; i++) {
-      int pixelValue = img.pixels[i];
-      int channelValue = 0;
-      
-      if (colorPlane.equals("red")) {
-        channelValue = (pixelValue >> 16) & 0xFF;
-      } 
-      else if (colorPlane.equals("green")) {
-        channelValue = (pixelValue >> 8) & 0xFF;
-      } 
-      else if (colorPlane.equals("blue")) {
-        channelValue = pixelValue & 0xFF;
-      }
-      
-      int bitValue = (channelValue >> bitLayer) & 1;
-      
-      // Convert bit to grayscale (0 = black, 1 = white)
-      int grayValue = bitValue * 255;
-      output.pixels[i] = color(grayValue, grayValue, grayValue);
-    }
-    
-    output.updatePixels();
-    return output;
   }
   
   void mousePressed() {
