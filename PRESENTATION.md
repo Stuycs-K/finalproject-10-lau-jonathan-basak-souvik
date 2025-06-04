@@ -13,3 +13,12 @@ For image mode, we take an input file as a cover image, a file of the image we w
 <img width="1088" alt="Rick turns black" src="https://github.com/user-attachments/assets/ec0542bf-d37a-41ae-b712-3ce21607a18f" />
 
 For text mode, we want the text to be displayed as an image, so we draw the text into a PGraphics object, which is basically a sketch buffer, save that PGraphics render as an image, and do the same process as done for images.
+
+<img width="495" alt="Screenshot 2025-06-03 at 10 51 16 PM" src="https://github.com/user-attachments/assets/f7e50247-4008-4a43-b4fb-6682a6c89e60" />
+
+For GIFs, things are slightly different. Due to lossy conversions with video files, we have to export an encoded gif as a lossless PNG file. So, we store 9 frames of the gif into the red, green, and blue planes in layers 0-2. This does make the gif ever so slightly visible in the image, however.
+
+![encode](https://github.com/user-attachments/assets/598ade31-102e-4c45-ae80-246034def583)
+
+The encoded gif >:)
+![ricky](https://github.com/user-attachments/assets/6c026f29-bf49-408d-b4bc-d061d01408f1)
