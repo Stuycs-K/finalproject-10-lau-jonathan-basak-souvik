@@ -4,7 +4,7 @@ int IMG = 0;
 int TXT = 1;
 int JIF = 2;
 
-int MODE = IMG;
+int MODE = TXT;
 String PLANE = "red";
 int LAYER = 0;
 String MESSAGE = "";
