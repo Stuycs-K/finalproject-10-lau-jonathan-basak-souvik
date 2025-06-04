@@ -14,6 +14,8 @@ class Gui { //The gui is composed of several things.
   Textbox inputFile, outputFile, layerBox, inputBox; 
   Switch modeSwitch, planeSwitch, exportSwitch;
   Button apply;
+  Stegsolve stegSolve;
+  
   //used for displaying images and gif from the GUI class
   PApplet parent;
   PImage decodedImage;
@@ -37,9 +39,11 @@ class Gui { //The gui is composed of several things.
     planeSwitch = new Switch(x + 250, y + 80, 100, 30, new String[]{"red", "green", "blue"});
     exportSwitch = new Switch(x + 250, y + 130, 100, 30, new String[]{"ENCODE", "DECODE"});
     
-    //Button
-    apply = new Button(x + 250, y + 180, 120, 50); //this can be reworked into a encode/decode switch if we end up adding the stegsolve here
+    //Stegsolve
+    stegSolve = new Stegsolve(x,y,150,50);
     
+    //Button
+    apply = new Button(x + 250, y + 180, 100, 30);
   }
   
   void draw() {
@@ -57,15 +61,23 @@ class Gui { //The gui is composed of several things.
     text("PLANE COLOR", x+250, y+70);
     
     textSize(30);
-    text("STEGOJAM© V2.0", x+20, y+240);
+    text("STEGOJAM© V2.01", x+20, y+240);
     textSize(12);
+    
+    if (exportSwitch.CURRENTVAL.equals("DECODE") && (modeSwitch.CURRENTVAL.equals("TEXT") || modeSwitch.CURRENTVAL.equals("IMAGE"))) {
+      textSize(16);
+      text("Stegsolve Controls:", x+20, y+280);
+      text("← → Arrow keys or click buttons to navigate", x+20, y+300);
+      textSize(12);
+      stegSolve.draw();
+    }
     
     inputFile.draw();
     outputFile.draw();
     layerBox.draw();
     inputBox.draw();
     
-    inputFile.update(); //This is to update the indication point
+    inputFile.update(); 
     outputFile.update();
     layerBox.update();
     inputBox.update();
@@ -73,9 +85,13 @@ class Gui { //The gui is composed of several things.
     modeSwitch.draw();
     planeSwitch.draw();
     exportSwitch.draw();
+    
+
+    
     apply.draw("APPLY");
     
-    if (animation != null) {
+    // Only show animation if not in stegsolve mode
+    if (animation != null && !(exportSwitch.CURRENTVAL.equals("DECODE") && (MODE == IMG || MODE == TXT))) {
       image(animation, 0, 0, 800, 600);
     }
   }
@@ -85,6 +101,9 @@ class Gui { //The gui is composed of several things.
     outputFile.mousePressed();
     layerBox.mousePressed();
     inputBox.mousePressed();
+    
+    // Handle stegsolve mouse presses
+    stegSolve.mousePressed();
     
     if (modeSwitch.IsValidZone()) {
       modeSwitch.nextVal();
@@ -101,6 +120,8 @@ class Gui { //The gui is composed of several things.
         planeSwitch.ACTIVE = true;
         layerBox.USABLE = true;
       }
+      // Reset stegsolve when changing modes
+      stegSolve.reset();
     }
     else if (planeSwitch.IsValidZone() && planeSwitch.ACTIVE) {
       planeSwitch.nextVal();
@@ -110,10 +131,14 @@ class Gui { //The gui is composed of several things.
         inputBox.USABLE = true;
       } else {
         inputBox.USABLE = false;
+        // Initialize stegsolve when switching to decode mode
+        if (INPUT != null) {
+          stegSolve.encodedImg = INPUT.copy();
+          stegSolve.updateCycle();
+        }
       }
     }
-    else if (apply.IsValidZone()) { //basically check for error limbo
-    
+    else if (apply.IsValidZone()) {
       INPUTFILENAME = inputFile.TXT;
       OUTPUTFILENAME = outputFile.TXT;
       MESSAGE = inputBox.TXT;
@@ -150,12 +175,15 @@ class Gui { //The gui is composed of several things.
         } else {
           encodeImage();
         }
-        
       } else {
         decodedImage = null;
         animation = null;
+        
+        // Initialize stegsolve for decode mode
+        stegSolve.encodedImg = INPUT.copy();
+        stegSolve.updateCycle();
+        
         if (MODE == IMG || MODE == TXT) {
-          //Edit this since we're doing arrows for stegsolve
           decodedImage = extractImage(INPUT, PLANE, LAYER);
           decodedImage.save("data/"+OUTPUTFILENAME);
         } else {
@@ -165,11 +193,14 @@ class Gui { //The gui is composed of several things.
           animation.play();
         }
       }
-      
     }
   }
   
   void keyPressed() {
+    // Handle stegsolve keys first
+    stegSolve.keyPressed();
+    
+    // Then handle textbox input
     if (inputFile.ACTIVE) {
       inputFile.keyPressed();
     }
