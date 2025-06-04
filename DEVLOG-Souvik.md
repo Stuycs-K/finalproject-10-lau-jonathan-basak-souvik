@@ -71,4 +71,5 @@ Incorporated GIF encoding into the GUI, and made it so that enabling GIF mode di
 
 ### 2025-06-03: Stegsolve
 Wrote the extractImage method, which will be used to stegsolve and when exporting a gif. Additionally wrote extractGif, which combines each black and white frame that was encoded in the image into a gif. Displaying the encoded gif now works. Did a lotta pair programming with Jonathan to fix bugs and add last-minute features.
+
 3hrs
