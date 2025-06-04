@@ -2,6 +2,8 @@
 
 This document must be updated daily every time you finish a work session.
 
+I can assert that Souvik did his part.
+
 ## Souvik Basak
 
 ### 2025-05-15: 
