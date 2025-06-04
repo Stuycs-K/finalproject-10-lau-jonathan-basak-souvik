@@ -2,6 +2,8 @@
 
 This document must be updated daily every time you finish a work session.
 
+I can assert that Jonathan did his part.
+
 ## Jonathan Lau 
 
 ### 2025-05-15 - Starting out the stego
