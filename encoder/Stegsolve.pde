@@ -45,11 +45,12 @@ class Stegsolve extends Button {
       channelRight.draw("►");
       
       // Display current plane information
-      fill(255);
       textSize(16);
       textAlign(LEFT, TOP);
-      text("Plane: " + planeNames[currChannel], 10, 10);
-      text("Channel: " + currChannel + "/24", 10, 30);
+      fill(0, 0, 0);
+      text("Plane: " + planeNames[currChannel], 810, 550);
+      text("Channel: " + currChannel + "/24", 810, 570);
+      stroke(255, 255, 255);
       textSize(12);
       
       // Update and display the current plane image
