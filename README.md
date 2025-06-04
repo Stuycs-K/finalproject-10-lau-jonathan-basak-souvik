@@ -34,7 +34,7 @@ For **MESSAGE** or **IMAGE** encoding, you can choose what color channel and wha
 The encoded image will now be displayed to the left of the GUI, and now we can move on to our next step: **Decoding**.
 
 ### Decoding 
-Now that you have your encoded image, lets extract the goods!
+Now that you have your encoded image, lets extract the goods! First click the ENCODE/DECODE switch to **DECODE**. This should lock everything except the MODE, input and output. If you want to extract text, click the switch until it reads **TEXT**, and I think you know how this works for the other modes. 
 
 ## Who Did What?
 
