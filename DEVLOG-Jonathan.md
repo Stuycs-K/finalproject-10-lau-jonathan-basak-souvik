@@ -118,3 +118,4 @@ Guess what, we're readding the GIF encoding method from the original conception 
 1hr
 
 ### 2025-06-03 - The Final Day
+Time to lock in. Finished stegsolve, added gif functionality with Souvik, added some flourishes to the GUI
