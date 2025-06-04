@@ -36,6 +36,8 @@ The encoded image will now be displayed to the left of the GUI, and now we can m
 ### Decoding 
 Now that you have your encoded image, lets extract the goods! First click the ENCODE/DECODE switch to **DECODE**. This should lock everything except the MODE, input and output. If you want to extract text, click the switch until it reads **TEXT**, and I think you know how this works for the other modes. 
 
+If you've extracted a gif, pressing **APPLY** should show the gif if you've put in the correct parameters. However, if you've encoded a message or image into the input image, you'll now need to use our built in stegsolve and move through the color planes to find your hidden prize! If you remember what color and plane you encoded to, this should be easy.
+
 ## Who Did What?
 
 Souvik: main encoding methods + gif functionality (encode/decode)
