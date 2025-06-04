@@ -98,7 +98,7 @@ GifMaker extractGif(PImage img) {
   }
   return gifExport;
 }
- 
+
 void draw() {
   if (DISPLAYMODE.equals("true")) {
     background(50);

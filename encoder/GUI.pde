@@ -16,7 +16,6 @@ class Gui { //The gui is composed of several things.
   Button apply;
   //used for displaying images and gif from the GUI class
   PApplet parent;
-  boolean exported = false;
   PImage decodedImage;
   Gif animation;
   
@@ -76,10 +75,8 @@ class Gui { //The gui is composed of several things.
     exportSwitch.draw();
     apply.draw("APPLY");
     
-    if (exported) {
-      if (animation != null) {
-        image(animation, 0, 0, 800, 600);
-      }
+    if (animation != null) {
+      image(animation, 0, 0, 800, 600);
     }
   }
   
@@ -157,7 +154,6 @@ class Gui { //The gui is composed of several things.
       } else {
         decodedImage = null;
         animation = null;
-        exported = false;
         if (MODE == IMG || MODE == TXT) {
           //Edit this since we're doing arrows for stegsolve
           PImage extracted = extractImage(INPUT, PLANE, LAYER);
@@ -168,7 +164,6 @@ class Gui { //The gui is composed of several things.
           animation = new Gif(parent, OUTPUTFILENAME);
           animation.play();
         }
-        exported = true;
       }
       
     }
