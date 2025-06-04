@@ -108,7 +108,7 @@ Implemented the Button superclass and Switch subclass (inheritance!). They work 
 2hr
 
 ### 2025-06-01 - GUI: Finished!
-Needed to add code catching errors, as well as designing the GUI class, the full implementation of the Textbox, Switch and Button classes into a functional GUI. Basically entailed a lot of changing values so everything looks just right. Planning to add an "error console" within the GUI that is created if any parameters create an error case. Starting to think that the GUI will overtake the makefile/terminal method of running the program, since the parseArgs method is taking up a lot of space and is cluttering otherwise clean code.
+Needed to add code catching errors, as well as designing the GUI class, the full implementation of the Textbox, Switch and Button classes into a functional GUI. Basically entailed a lot of changing values so everything looks just right. Maybe will add an "error console" within the GUI that is created if any parameters create an error case. Starting to think that the GUI will overtake the makefile/terminal method of running the program, since the parseArgs method is taking up a lot of space and is cluttering otherwise clean code.
 
 2hr
 
@@ -118,4 +118,6 @@ Guess what, we're readding the GIF encoding method from the original conception 
 1hr
 
 ### 2025-06-03 - The Final Day
-Time to lock in. Finished stegsolve, added gif functionality with Souvik, added some flourishes to the GUI
+Time to lock in. Completely added and finished stegsolve, added gif functionality and added some minor flourishes to the GUI. StegoJam is now at version 2.01 which is nice. Fixed a LOT of bugs with Souvik. Terminal line args completely removed in favor of GUI, and I believe that this was for the best. We are finally free.
+
+3hr
